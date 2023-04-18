@@ -10,18 +10,23 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[       890,         35]
-NotebookOptionsPosition[       561,         21]
-NotebookOutlinePosition[      1030,         38]
-CellTagsIndexPosition[       987,         35]
+NotebookDataLength[      1205,         41]
+NotebookOptionsPosition[       744,         25]
+NotebookOutlinePosition[      1255,         43]
+CellTagsIndexPosition[      1212,         40]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+Cell["Progetto di Matematica computazionale", "Title",
+ CellChangeTimes->{{3.890809043625303*^9, 
+  3.8908090523987093`*^9}},ExpressionUUID->"028932c3-f59f-49c6-ac33-\
+35816f08a313"]
 },
-WindowSize->{808, 897},
-WindowMargins->{{129, Automatic}, {-13, Automatic}},
-FrontEndVersion->"13.2 for Mac OS X x86 (64-bit) (January 30, 2023)",
+WindowSize->{1152., 585.6},
+WindowMargins->{{
+  Automatic, -5.399999999999864}, {-5.399999999999977, Automatic}},
+FrontEndVersion->"13.2 for Microsoft Windows (64-bit) (January 30, 2023)",
 StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
   CharacterEncoding -> "UTF-8"],
 ExpressionUUID->"4ac89952-8786-4a2b-87fa-ab27338c2f22"
@@ -37,9 +42,8 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
+Cell[558, 20, 182, 3, 96, "Title",ExpressionUUID->"028932c3-f59f-49c6-ac33-35816f08a313"]
 }
 ]
 *)
-
-(* End of internal cache information *)
 
