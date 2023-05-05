@@ -22,7 +22,7 @@ StrEncode::usage = "Encode[x] prende in input una stringa x e la espande."
 
 Begin["`Private`"]
 
-StrEncode[inputString_, maxErrors_]:=
+StrEncode[inputString_String, maxErrors_Integer]:=
 DynamicModule[{i},
 asciiList =ToCharacterCode[inputString];
 points = Transpose[{Range[Length[asciiList]],asciiList}];
@@ -41,7 +41,7 @@ Column[
 
 
 
-PlotString[asciiList_, inputString_, points_]:=
+PlotString[asciiList_List, inputString_String, points_List]:=
 Module[{i},
 	charList=Characters[inputString];
 	labeledPoints=Transpose[{points,charList}];
@@ -55,7 +55,7 @@ Module[{i},
 ]
 
 
-PlotPoly[asciiList_, points_, labeledPointsList_]:=
+PlotPoly[asciiList_List, points_List, labeledPointsList_List]:=
 Module[{i},
 	Show[
 		Plot[polynomial,{x,1,Length[asciiList]},PlotStyle->Red,AxesLabel->{"x","ASCII Value"},ImageSize->Medium],
@@ -64,7 +64,7 @@ Module[{i},
 ]
 
 
-ExpandString[expandedPoints_]:=
+ExpandString[expandedPoints_List]:=
 Module[{i},
 asciiListExpanded=Round[Last/@expandedPoints];
 stringExpanded = FromCharacterCode[asciiListExpanded];
@@ -80,7 +80,7 @@ Show[
 ]
 
 
-StringCorruption[expandedPoints_,maxErrors_]:=
+StringCorruption[expandedPoints_List,maxErrors_Integer]:=
 Module[{i},
 	asciiListExpanded=Round[Last/@expandedPoints];
 	stringExpanded = FromCharacterCode[asciiListExpanded];
