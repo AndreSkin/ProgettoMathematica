@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     66266,       1330]
-NotebookOptionsPosition[     65210,       1305]
-NotebookOutlinePosition[     65685,       1322]
-CellTagsIndexPosition[     65642,       1319]
+NotebookDataLength[     66707,       1340]
+NotebookOptionsPosition[     65647,       1315]
+NotebookOutlinePosition[     66125,       1332]
+CellTagsIndexPosition[     66082,       1329]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -81,16 +81,16 @@ Cell[BoxData[
 
 Cell[BoxData[
  RowBox[{"{", 
-  RowBox[{"10", ",", 
+  RowBox[{"\<\"iao\[CenterDot]\:015d\:0285\:06eb\:0a71\:0f09\:1bff\:24a5\"\>",
+    ",", 
    RowBox[{"{", 
-    RowBox[{
-    "14", ",", "8", ",", "10", ",", "6", ",", "12", ",", "13", ",", "11", ",",
-      "1", ",", "2", ",", "5"}], "}"}], ",", "\<\"ao\:0285\:06eb\"\>"}], 
+    RowBox[{"12", ",", "8", ",", "1"}], "}"}], ",", "14", ",", "10"}], 
   "}"}]], "Print",
- CellChangeTimes->{3.892276436552596*^9, 3.892276468924371*^9},
+ CellChangeTimes->{3.892276436552596*^9, 3.892276468924371*^9, 
+  3.892281908210931*^9, 3.8922824834786906`*^9, 3.8922826088956165`*^9},
  CellLabel->
   "During evaluation of \
-In[4]:=",ExpressionUUID->"b8343861-3ffd-44ab-b2e4-d3d76bdc8c33"],
+In[4]:=",ExpressionUUID->"db769b98-9e25-4bf3-9d27-53aed1e37057"],
 
 Cell[BoxData[
  DynamicModuleBox[{ENC`Private`i$$}, 
@@ -106,17 +106,17 @@ Cell[BoxData[
                FontFamily->"Arial"]}, {
               TagBox[
                {Opacity[0.], PointBox[{{1., 99.}}]},
-               Annotation[#, {{Labeled}, Charting`Private`Tag$4831, {1}}]& ], 
+               Annotation[#, {{Labeled}, Charting`Private`Tag$5750, {1}}]& ], 
               TagBox[
                {Opacity[0.], PointBox[{{2., 105.}}]},
-               Annotation[#, {{Labeled}, Charting`Private`Tag$4831, {2}}]& ], 
+               Annotation[#, {{Labeled}, Charting`Private`Tag$5750, {2}}]& ], 
               TagBox[
                {Opacity[0.], PointBox[{{3., 97.}}]},
-               Annotation[#, {{Labeled}, Charting`Private`Tag$4831, {3}}]& ], 
+               Annotation[#, {{Labeled}, Charting`Private`Tag$5750, {3}}]& ], 
               TagBox[
                {Opacity[0.], PointBox[{{4., 111.}}]},
                
-               Annotation[#, {{Labeled}, Charting`Private`Tag$4831, {
+               Annotation[#, {{Labeled}, Charting`Private`Tag$5750, {
                  4}}]& ]}}, {{{}, {{}, {GraphicsGroupBox[{
                   {EdgeForm[None], FaceForm[{GrayLevel[1], Opacity[
                     NCache[
@@ -484,7 +484,7 @@ QL3TadWmIQYkG0bYULKsoOGx9wxzhAGujXVzT2Zbgcz664+ixhkwGW5iapxv
 Ba/4bvtncBjgwfjEzi2wAufqDNNqHgO23y69LV9kBcJRhYq/phhgdhxMokqs
 INuienxmBu9/EMSeKbOC/wFkNCro
                  "]]},
-               Annotation[#, "Charting`Private`Tag$5170#1"]& ]}, {}}, {{}, {
+               Annotation[#, "Charting`Private`Tag$6089#1"]& ]}, {}}, {{}, {
               {RGBColor[0, 0, 1], PointSize[Medium], AbsoluteThickness[1.6], 
                
                StyleBox[
@@ -492,17 +492,17 @@ INuienxmBu9/EMSeKbOC/wFkNCro
                 FontFamily->"Arial"]}, {
                TagBox[
                 {Opacity[0.], PointBox[{{1., 99.}}]},
-                Annotation[#, {{Labeled}, Charting`Private`Tag$5253, {1}}]& ], 
+                Annotation[#, {{Labeled}, Charting`Private`Tag$6172, {1}}]& ], 
                TagBox[
                 {Opacity[0.], PointBox[{{2., 105.}}]},
-                Annotation[#, {{Labeled}, Charting`Private`Tag$5253, {2}}]& ], 
+                Annotation[#, {{Labeled}, Charting`Private`Tag$6172, {2}}]& ], 
                TagBox[
                 {Opacity[0.], PointBox[{{3., 97.}}]},
-                Annotation[#, {{Labeled}, Charting`Private`Tag$5253, {3}}]& ], 
+                Annotation[#, {{Labeled}, Charting`Private`Tag$6172, {3}}]& ], 
                TagBox[
                 {Opacity[0.], PointBox[{{4., 111.}}]},
                 
-                Annotation[#, {{Labeled}, Charting`Private`Tag$5253, {
+                Annotation[#, {{Labeled}, Charting`Private`Tag$6172, {
                   4}}]& ]}}, {{{}, {{}, {GraphicsGroupBox[{
                    {EdgeForm[None], FaceForm[{GrayLevel[1], Opacity[
                     NCache[
@@ -811,7 +811,7 @@ GcYoISc/q9BgNey1oPkfZah4rTC6bzcNRtevvhymo/m97lyi69CgF2ZiZFfQ
 /JoX7x7Xp0HzZatjp1bR+9LCraqNaVDVXC5Xua4MmUxBQhKWNCggb136908Z
 xAfXfkUdpcH/AHAyKzc=
              "]]},
-           Annotation[#, "Charting`Private`Tag$5361#1"]& ]}, {}}, {{}, {
+           Annotation[#, "Charting`Private`Tag$6280#1"]& ]}, {}}, {{}, {
           {RGBColor[0, 0, 1], PointSize[Medium], AbsoluteThickness[1.6], 
            
            StyleBox[
@@ -821,47 +821,47 @@ xAfXfkUdpcH/AHAyKzc=
             FontFamily->"Arial"]}, {
            TagBox[
             {Opacity[0.], PointBox[{{1., 99.}}]},
-            Annotation[#, {{Labeled}, Charting`Private`Tag$5457, {1}}]& ], 
+            Annotation[#, {{Labeled}, Charting`Private`Tag$6376, {1}}]& ], 
            TagBox[
             {Opacity[0.], PointBox[{{2., 105.}}]},
-            Annotation[#, {{Labeled}, Charting`Private`Tag$5457, {2}}]& ], 
+            Annotation[#, {{Labeled}, Charting`Private`Tag$6376, {2}}]& ], 
            TagBox[
             {Opacity[0.], PointBox[{{3., 97.}}]},
-            Annotation[#, {{Labeled}, Charting`Private`Tag$5457, {3}}]& ], 
+            Annotation[#, {{Labeled}, Charting`Private`Tag$6376, {3}}]& ], 
            TagBox[
             {Opacity[0.], PointBox[{{4., 111.}}]},
-            Annotation[#, {{Labeled}, Charting`Private`Tag$5457, {4}}]& ], 
+            Annotation[#, {{Labeled}, Charting`Private`Tag$6376, {4}}]& ], 
            TagBox[
             {Opacity[0.], PointBox[{{5., 183.}}]},
-            Annotation[#, {{Labeled}, Charting`Private`Tag$5457, {5}}]& ], 
+            Annotation[#, {{Labeled}, Charting`Private`Tag$6376, {5}}]& ], 
            TagBox[
             {Opacity[0.], PointBox[{{6., 349.}}]},
-            Annotation[#, {{Labeled}, Charting`Private`Tag$5457, {6}}]& ], 
+            Annotation[#, {{Labeled}, Charting`Private`Tag$6376, {6}}]& ], 
            TagBox[
             {Opacity[0.], PointBox[{{7., 645.}}]},
-            Annotation[#, {{Labeled}, Charting`Private`Tag$5457, {7}}]& ], 
+            Annotation[#, {{Labeled}, Charting`Private`Tag$6376, {7}}]& ], 
            TagBox[
             {Opacity[0.], PointBox[{{8., 1107.}}]},
-            Annotation[#, {{Labeled}, Charting`Private`Tag$5457, {8}}]& ], 
+            Annotation[#, {{Labeled}, Charting`Private`Tag$6376, {8}}]& ], 
            TagBox[
             {Opacity[0.], PointBox[{{9., 1771.}}]},
-            Annotation[#, {{Labeled}, Charting`Private`Tag$5457, {9}}]& ], 
+            Annotation[#, {{Labeled}, Charting`Private`Tag$6376, {9}}]& ], 
            TagBox[
             {Opacity[0.], PointBox[{{10., 2673.}}]},
-            Annotation[#, {{Labeled}, Charting`Private`Tag$5457, {10}}]& ], 
+            Annotation[#, {{Labeled}, Charting`Private`Tag$6376, {10}}]& ], 
            TagBox[
             {Opacity[0.], PointBox[{{11., 3849.}}]},
-            Annotation[#, {{Labeled}, Charting`Private`Tag$5457, {11}}]& ], 
+            Annotation[#, {{Labeled}, Charting`Private`Tag$6376, {11}}]& ], 
            TagBox[
             {Opacity[0.], PointBox[{{12., 5335.}}]},
-            Annotation[#, {{Labeled}, Charting`Private`Tag$5457, {12}}]& ], 
+            Annotation[#, {{Labeled}, Charting`Private`Tag$6376, {12}}]& ], 
            TagBox[
             {Opacity[0.], PointBox[{{13., 7167.}}]},
-            Annotation[#, {{Labeled}, Charting`Private`Tag$5457, {13}}]& ], 
+            Annotation[#, {{Labeled}, Charting`Private`Tag$6376, {13}}]& ], 
            TagBox[
             {Opacity[0.], PointBox[{{14., 9381.}}]},
             
-            Annotation[#, {{Labeled}, Charting`Private`Tag$5457, {
+            Annotation[#, {{Labeled}, Charting`Private`Tag$6376, {
               14}}]& ]}}, {{{}, {{}, {GraphicsGroupBox[{
                {EdgeForm[None], FaceForm[{GrayLevel[1], Opacity[
                  NCache[
@@ -1292,19 +1292,29 @@ xAfXfkUdpcH/AHAyKzc=
    3.89227477620725*^9, 3.892274868367544*^9, 3.8922749178017435`*^9, 
    3.8922750226898985`*^9, 3.8922756312995725`*^9, 3.8922756756047325`*^9, 
    3.892275886787639*^9, 3.892275936782137*^9, 3.892276278584758*^9, 
-   3.8922764380149384`*^9, 3.8922764697079973`*^9},
- CellLabel->"Out[6]=",ExpressionUUID->"4b02965e-20ba-4a32-a938-282e9b308003"]
+   3.8922764380149384`*^9, 3.8922764697079973`*^9, 3.892281909179043*^9, 
+   3.892282484029689*^9, 3.892282609302389*^9},
+ CellLabel->"Out[6]=",ExpressionUUID->"11aba3a2-831d-448d-b1aa-86594232bbfb"]
 }, Open  ]],
 
 Cell[BoxData[
- RowBox[{"(*", "Decode", "*)"}]], "Input",
- CellChangeTimes->{{3.8922759803336115`*^9, 
-  3.8922759840836563`*^9}},ExpressionUUID->"4134980f-50af-4c77-898f-\
+ RowBox[{
+  RowBox[{"(*", "Decode", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"msg_received", " ", "=", "  ", 
+     RowBox[{"[", 
+      RowBox[{
+      "corruptedString", ",", " ", "errorsPos", ",", " ", "strLen", ",", " ", 
+       "maxErrors"}], "]"}]}], ";"}], "*)"}]}]], "Input",
+ CellChangeTimes->{{3.8922759803336115`*^9, 3.8922759840836563`*^9}, {
+  3.892282457518738*^9, 
+  3.8922824578256392`*^9}},ExpressionUUID->"4134980f-50af-4c77-898f-\
 b3f16af5fa1c"]
 }, Open  ]]
 },
-WindowSize->{1141.2, 579.6},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowSize->{1440., 747.75},
+WindowMargins->{{-6, Automatic}, {642, Automatic}},
 FrontEndVersion->"13.2 for Microsoft Windows (64-bit) (January 30, 2023)",
 StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
   CharacterEncoding -> "UTF-8"],
@@ -1327,10 +1337,10 @@ Cell[864, 28, 263, 5, 39, "Input",ExpressionUUID->"444859a6-0919-4d4e-89e0-a7e47
 Cell[1130, 35, 637, 13, 78, "Input",ExpressionUUID->"458452ff-5510-4bde-9e52-7cd62a282be1"],
 Cell[CellGroupData[{
 Cell[1792, 52, 1393, 27, 97, "Input",ExpressionUUID->"7a8b3265-5c76-43c2-b4ac-cee8e39b3236"],
-Cell[3188, 81, 420, 11, 30, "Print",ExpressionUUID->"b8343861-3ffd-44ab-b2e4-d3d76bdc8c33"],
-Cell[3611, 94, 61382, 1201, 707, "Output",ExpressionUUID->"4b02965e-20ba-4a32-a938-282e9b308003"]
+Cell[3188, 81, 466, 11, 30, "Print",ExpressionUUID->"db769b98-9e25-4bf3-9d27-53aed1e37057"],
+Cell[3657, 94, 61452, 1202, 707, "Output",ExpressionUUID->"11aba3a2-831d-448d-b1aa-86594232bbfb"]
 }, Open  ]],
-Cell[65008, 1298, 186, 4, 39, "Input",ExpressionUUID->"4134980f-50af-4c77-898f-b3f16af5fa1c"]
+Cell[65124, 1299, 507, 13, 59, "Input",ExpressionUUID->"4134980f-50af-4c77-898f-b3f16af5fa1c"]
 }, Open  ]]
 }
 ]

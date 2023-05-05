@@ -19,6 +19,7 @@
 BeginPackage["ENC`"]
 
 StrEncode::usage = "Encode[x] prende in input una stringa x e la espande."
+ComputedValues::usage = "ComputedValues \[EGrave] una variabile pubblica che contiene i valori computati da StrEncode."
 
 Begin["`Private`"]
 
@@ -92,7 +93,10 @@ Module[{i},
 	corruptedString = StringJoin[myStringAsList];
 	
 	strLen = StringLength[stringExpanded];
-	Print[{nErrors, errorsPos, corruptedString}]
+	(*msg_received =  [corruptedString, errorsPos, strLen, maxErrors];*)
+	StrLen = StringLength[corruptedString] + Length[errorsPos];
+	ComputedValues = {corruptedString, errorsPos,StrLen, maxErrors};
+	Print[ComputedValues]
 ]
 
 
