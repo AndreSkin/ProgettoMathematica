@@ -22,46 +22,61 @@ StrEncode::usage = "Encode[x] prende in input una stringa x e la espande."
 
 Begin["`Private`"]
 
-StrEncode[inputString_]:=
+StrEncode[inputString_, maxErrors_]:=
 DynamicModule[{i},
 asciiList =ToCharacterCode[inputString];
 points = Transpose[{Range[Length[asciiList]],asciiList}];
-ExpandString[asciiList, points, labeledPointsList, maxErrors = 10];
-PlotString[asciiList, inputString]
+polynomial = Expand[InterpolatingPolynomial[points, x]];
+
+Column[
+	{
+		PlotString[asciiList, inputString, points],
+		ExpandString[polynomial,points,maxErrors]
+	}
 ]
 
-PlotString[asciiList_, inputString_]:=
+]
+
+
+
+PlotString[asciiList_, inputString_, points_]:=
 Module[{i},
 	charList=Characters[inputString];
 	labeledPoints=Transpose[{points,charList}];
 	labeledPointsList=Labeled[#[[1]],#[[2]],Above]&/@labeledPoints;
 	Column[
 		{
-			ListPlot[labeledPointsList,PlotStyle->{PointSize[Medium],Blue},AxesLabel->{"x","ASCII Value"},ImageSize->Large],
+			ListPlot[labeledPointsList,PlotStyle->{PointSize[Medium],Blue},AxesLabel->{"x","ASCII Value"},ImageSize->Medium],
 			PlotPoly[asciiList, points, labeledPointsList]
 		}
 	]
 ]
 
+
 PlotPoly[asciiList_, points_, labeledPointsList_]:=
 Module[{i},
-	polynomial = Expand[InterpolatingPolynomial[points, x]];
 	Show[
-		Plot[polynomial,{x,1,Length[asciiList]},PlotStyle->Red,AxesLabel->{"x","ASCII Value"},ImageSize->Large],
+		Plot[polynomial,{x,1,Length[asciiList]},PlotStyle->Red,AxesLabel->{"x","ASCII Value"},ImageSize->Medium],
 		ListPlot[labeledPointsList,PlotStyle->{PointSize[Medium], Blue}]
 	]
 ]
 
-ExpandString[asciiList_, points_, labeledPointsList_]:=
+
+ExpandString[polynomial_,points_,maxErrors_]:=
 Module[{i},
-	expandedPoints=Table[{i,polynomial/. x->i},{i,Length[points]+maxErrors}];
-	asciiListExpanded=Round[Last/@expandedPoints];
-	stringExpanded = FromCharacterCode[asciiListExpanded]
-	charListExpanded=FromCharacterCode/@asciiListExpanded;
-	labeledPointsExpanded=Transpose[{expandedPoints,charListExpanded}];
-	labeledPointsExpandedList=Labeled[#[[1]],#[[2]],Above]&/@labeledPointsExpanded;
+expandedPoints=Table[{i,polynomial/. x->i},{i,Length[points]+maxErrors}];
+asciiListExpanded=Round[Last/@expandedPoints];
+stringExpanded = FromCharacterCode[asciiListExpanded];
+charListExpanded=FromCharacterCode/@asciiListExpanded;
+labeledPointsExpanded=Transpose[{expandedPoints,charListExpanded}];
+labeledPointsExpandedList=Labeled[#[[1]],#[[2]],Above]&/@labeledPointsExpanded;
+
+Show[
+	Plot[polynomial,{x,1,Length[expandedPoints]},PlotStyle->Red,AxesLabel->{"x","ASCII Value"},ImageSize->Medium],
+	ListPlot[labeledPointsExpandedList,PlotStyle->{PointSize[Medium],Blue}]
 ]
 
+]
 
 
 End[]
