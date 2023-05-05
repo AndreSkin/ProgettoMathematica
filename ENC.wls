@@ -27,11 +27,13 @@ DynamicModule[{i},
 asciiList =ToCharacterCode[inputString];
 points = Transpose[{Range[Length[asciiList]],asciiList}];
 polynomial = Expand[InterpolatingPolynomial[points, x]];
+expandedPoints=Table[{i,polynomial/. x->i},{i,Length[points]+maxErrors}];
+StringCorruption[expandedPoints,maxErrors];
 
 Column[
 	{
 		PlotString[asciiList, inputString, points],
-		ExpandString[polynomial,points,maxErrors]
+		ExpandString[expandedPoints]
 	}
 ]
 
@@ -62,9 +64,8 @@ Module[{i},
 ]
 
 
-ExpandString[polynomial_,points_,maxErrors_]:=
+ExpandString[expandedPoints_]:=
 Module[{i},
-expandedPoints=Table[{i,polynomial/. x->i},{i,Length[points]+maxErrors}];
 asciiListExpanded=Round[Last/@expandedPoints];
 stringExpanded = FromCharacterCode[asciiListExpanded];
 charListExpanded=FromCharacterCode/@asciiListExpanded;
@@ -76,6 +77,21 @@ Show[
 	ListPlot[labeledPointsExpandedList,PlotStyle->{PointSize[Medium],Blue}]
 ]
 
+]
+
+
+StringCorruption[expandedPoints_,maxErrors_]:=
+Module[{i},
+	asciiListExpanded=Round[Last/@expandedPoints];
+	stringExpanded = FromCharacterCode[asciiListExpanded];
+	nErrors = RandomInteger[{1, maxErrors}];
+	errorsPos = RandomSample[Range[StringLength[stringExpanded]], nErrors];
+	
+	myStringAsList = Characters[stringExpanded];
+	myStringAsList = Delete[myStringAsList, List /@ errorsPos];
+	corruptedString = StringJoin[myStringAsList];
+	
+	strLen = StringLength[stringExpanded];
 ]
 
 
