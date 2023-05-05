@@ -28,8 +28,8 @@ asciiList =ToCharacterCode[inputString];
 points = Transpose[{Range[Length[asciiList]],asciiList}];
 polynomial = Expand[InterpolatingPolynomial[points, x]];
 expandedPoints=Table[{i,polynomial/. x->i},{i,Length[points]+maxErrors}];
-StringCorruption[expandedPoints,maxErrors];
 
+StringCorruption[expandedPoints,maxErrors];
 Column[
 	{
 		PlotString[asciiList, inputString, points],
@@ -92,6 +92,7 @@ Module[{i},
 	corruptedString = StringJoin[myStringAsList];
 	
 	strLen = StringLength[stringExpanded];
+	Print[{nErrors, errorsPos, corruptedString}]
 ]
 
 
