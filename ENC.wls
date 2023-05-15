@@ -36,7 +36,7 @@ str = inputString;
 fDev = D[polynomial, x];
 fDevSign = Sign[fDev /. x -> asciiList[[-1]]];
 If[fDevSign < 0, 
-(str = inputString <> "x"; 
+(str = inputString <> "z"; 
 asciiList =ToCharacterCode[str]; 
 points = Transpose[{Range[Length[asciiList]],asciiList}];
 charList=Characters[str];
