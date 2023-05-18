@@ -1,0 +1,717 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     31152,        709]
+NotebookOptionsPosition[     28851,        665]
+NotebookOutlinePosition[     29415,        684]
+CellTagsIndexPosition[     29372,        681]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"SetOptions", "[", 
+  RowBox[{"$FrontEnd", ",", 
+   RowBox[{"IgnoreSpellCheck", "->", "True"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.893307082762464*^9, 3.893307085080208*^9}, 
+   3.893307127508788*^9},
+ CellLabel->"In[1]:=",ExpressionUUID->"be219ff8-5338-42be-883a-75a464734fec"],
+
+Cell["\<\
+Un polinomio \[EGrave] un\[CloseCurlyQuote]espressione algebrica composta da \
+costanti e variabili combinate usando soltanto addizione, sottrazione e \
+moltiplicazione.
+Gli esponenti delle variabili sono valori interi non negativi. 
+In altre parole, un polinomio \[EGrave] una qualsiasi espressione data dalla \
+somma algebrica tra due o pi\[UGrave] monomi, o eventualmente un monomio. 
+Ad esempio, 2x-3x^2+5 \[EGrave] un polinomio. 
+
+L\[CloseCurlyQuote]interpolazione polinomiale \[EGrave] un metodo per trovare \
+un polinomio che passa attraverso un insieme di punti dati.
+Ad esempio, se hai due punti sul piano cartesiano, puoi trovare una retta (un \
+polinomio di grado 1) che passa attraverso entrambi i punti. 
+Se hai tre punti, puoi trovare una parabola (un polinomio di grado 2) che \
+passa attraverso tutti e tre i punti. E cos\[IGrave] via.
+
+In generale, se hai n+1 punti distinti, puoi sempre trovare un polinomio di \
+grado n che passa attraverso tutti i punti. Questo polinomio \[EGrave] unico, \
+il che significa che non esiste un altro polinomio di grado n che passa \
+attraverso gli stessi punti.
+
+Tuttavia, ci possono essere molti polinomi di grado superiore a n che passano \
+attraverso gli stessi punti. Ad esempio, se hai due punti sul piano \
+cartesiano, ci pu\[OGrave] essere una sola retta che passa attraverso \
+entrambi i punti, ma ci possono essere infinite parabole (polinomi di grado \
+2) che passano attraverso entrambi i punti.\
+\>", "Text",
+ CellChangeTimes->{
+  3.893306515211483*^9, {3.8933066249881144`*^9, 3.89330665905879*^9}, {
+   3.893306846814622*^9, 3.893306862266982*^9}, {3.8933072036815987`*^9, 
+   3.893307204315208*^9}},ExpressionUUID->"10504e94-3d3d-46e6-a6c3-\
+c25a7f344505"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"GENERATORE", " ", "ESERCIZIO"}], "*)"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "Imposta", " ", "il", " ", "numero", " ", "di", " ", "punti", " ", "e", 
+    " ", 
+    RowBox[{"l", "'"}], "intervallo", " ", "per", " ", "le", " ", "x", " ", 
+    "e", " ", "le", " ", "y"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"n", "=", "7"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"xmin", "=", "0"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"xmax", "=", "6"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"ymin", "=", "0"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"ymax", "=", "10"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"punti", "=", 
+     RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"polinomio", " ", "=", " ", "\"\<\>\""}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Trova", " ", "il", " ", "grado", " ", "del", " ", "polinomio", " ", 
+     "unico", " ", "che", " ", "passa", " ", "attraverso", " ", "i", " ", 
+     "punti"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"grado", "=", 
+     RowBox[{"n", "-", "1"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"GeneraSoluzione", "[", 
+     RowBox[{"punti_", ",", "xmin_", ",", "xmax_"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"grado", ",", "polinomio"}], "}"}], ",", 
+      RowBox[{
+       RowBox[{"grado", "=", 
+        RowBox[{
+         RowBox[{"Length", "[", "punti", "]"}], "-", "1"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"polinomio", "=", 
+        RowBox[{"InterpolatingPolynomial", "[", 
+         RowBox[{"punti", ",", "x"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       "polinomio"}]}], "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]",
+    "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"GeneraPunti", "[", 
+     RowBox[{"xmin_", ",", "xmax_", ",", "ymin_", ",", "ymax_", ",", "n_"}], 
+     "]"}], ":=", 
+    RowBox[{"Module", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"xvalori", ",", "yvalori", ",", "punti"}], "}"}], ",", 
+      RowBox[{
+       RowBox[{"xvalori", "=", 
+        RowBox[{"RandomSample", "[", 
+         RowBox[{
+          RowBox[{"Range", "[", 
+           RowBox[{"xmin", ",", "xmax"}], "]"}], ",", "n"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"yvalori", "=", 
+        RowBox[{"RandomInteger", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"ymin", ",", "ymax"}], "}"}], ",", "n"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"punti", "=", 
+        RowBox[{"Transpose", "[", 
+         RowBox[{"{", 
+          RowBox[{"xvalori", ",", "yvalori"}], "}"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"polinomio", "=", 
+        RowBox[{"GeneraSoluzione", "[", 
+         RowBox[{"punti", ",", "xmin", ",", "xmax"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "punti"}]}], "\[IndentingNewLine]", 
+     "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.89330710180188*^9, 3.8933071030794907`*^9}, {
+   3.893308099701762*^9, 3.893308144851404*^9}, {3.893308287373836*^9, 
+   3.893308298734651*^9}, {3.893308383580854*^9, 3.8933084216885*^9}, {
+   3.893308498178059*^9, 3.893308532985819*^9}, 3.893308601737154*^9, {
+   3.893308705104013*^9, 3.893308707399892*^9}, {3.8933088947287197`*^9, 
+   3.893308912737091*^9}, 3.893308994824494*^9, {3.8933889474331913`*^9, 
+   3.893388991421442*^9}, {3.893389034782897*^9, 3.893389087797566*^9}, {
+   3.89338919027518*^9, 3.893389235619566*^9}, {3.893389663654202*^9, 
+   3.893389671204236*^9}, 3.893389916155016*^9, {3.893390033993094*^9, 
+   3.893390034432185*^9}, {3.893390099763049*^9, 3.893390100213945*^9}, {
+   3.893391698431292*^9, 3.8933917251450644`*^9}, {3.893393438862105*^9, 
+   3.893393446755674*^9}, {3.893393510019733*^9, 3.8933935322772503`*^9}, {
+   3.89339372085913*^9, 3.893393732007347*^9}, {3.893393964426621*^9, 
+   3.8933939730988607`*^9}, {3.8933955547948112`*^9, 3.89339556043381*^9}, {
+   3.893408449926404*^9, 3.893408479236784*^9}, 3.893408512612626*^9},
+ CellLabel->"In[53]:=",ExpressionUUID->"93215a60-0d13-4786-95d7-6f5ef6445095"],
+
+Cell["\<\
+Questo Slider modifica il numero di punti del polinomio che si vuole generare.\
+\>", "Text",
+ CellChangeTimes->{{3.893390454095934*^9, 
+  3.8933904828934793`*^9}},ExpressionUUID->"dac9b4f4-e676-444c-ba67-\
+340fa66dfd47"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DynamicModule", "[", 
+  RowBox[{
+   RowBox[{"{", "}"}], ",", 
+   RowBox[{"Column", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Slider", "[", 
+       RowBox[{
+        RowBox[{"Dynamic", "[", "n", "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "10", ",", "1"}], "}"}]}], "]"}], ",", 
+      RowBox[{"Dynamic", "[", 
+       RowBox[{
+        RowBox[{"xmax", "=", 
+         RowBox[{"n", "-", "1"}]}], ";", " ", 
+        RowBox[{"grado", "=", " ", 
+         RowBox[{"n", "-", "1"}]}], ";", "n"}], "]"}]}], "}"}], "]"}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.893389986259289*^9, 3.8933899896907673`*^9}, {
+  3.893390222561322*^9, 3.893390236358507*^9}, {3.893390306931735*^9, 
+  3.893390310472334*^9}, {3.893390418922062*^9, 3.8933904493639097`*^9}, {
+  3.8933905030874157`*^9, 3.893390532472766*^9}, {3.8933932457777653`*^9, 
+  3.893393255304277*^9}, {3.893408340075572*^9, 3.8934084122367563`*^9}, {
+  3.893408471314233*^9, 3.893408518747478*^9}},
+ CellLabel->"In[52]:=",ExpressionUUID->"6cd7296e-be49-4c00-ae7f-2a3863f775dc"],
+
+Cell[BoxData[
+ DynamicModuleBox[{}, 
+  TagBox[GridBox[{
+     {
+      SliderBox[Dynamic[$CellContext`n], {0, 10, 1}]},
+     {
+      DynamicBox[
+       ToBoxes[$CellContext`xmax = $CellContext`n - 
+          1; $CellContext`grado = $CellContext`n - 1; $CellContext`n, 
+        StandardForm],
+       ImageSizeCache->{7.640625, {0., 8.}}]}
+    },
+    DefaultBaseStyle->"Column",
+    GridBoxAlignment->{"Columns" -> {{Left}}},
+    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+   "Column"],
+  DynamicModuleValues:>{}]], "Output",
+ CellChangeTimes->{3.89340825990833*^9, 3.893408519187501*^9},
+ CellLabel->"Out[52]=",ExpressionUUID->"7bcae4ec-1099-4e79-83cb-23a98cd8cb55"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DynamicModule", "[", 
+  RowBox[{
+   RowBox[{"{", "}"}], ",", 
+   RowBox[{"Column", "[", 
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Button", "[", 
+       RowBox[{"\"\<Genera Punti\>\"", ",", 
+        RowBox[{"punti", "=", 
+         RowBox[{"GeneraPunti", "[", 
+          RowBox[{"xmin", ",", "xmax", ",", "ymin", ",", "ymax", ",", "n"}], 
+          "]"}]}], ",", " ", 
+        RowBox[{"ImageSize", "->", 
+         RowBox[{"{", 
+          RowBox[{"100", ",", "Automatic"}], "}"}]}]}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Dynamic", "[", 
+       RowBox[{"Row", "[", 
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<Le coordinate dei punti del polinomio sono: \>\"", ",", 
+          "punti"}], "}"}], "]"}], "]"}]}], "\[IndentingNewLine]", "}"}], 
+    "]"}]}], "\[IndentingNewLine]", "]"}]], "Input",
+ CellChangeTimes->{{3.893391278409232*^9, 3.893391323930998*^9}, {
+  3.8933915056896753`*^9, 3.89339153684636*^9}, {3.893391602821643*^9, 
+  3.893391604853882*^9}, {3.893391690947413*^9, 3.893391694517982*^9}, {
+  3.893391858767975*^9, 3.893391859293562*^9}, {3.8933934218585453`*^9, 
+  3.893393430292315*^9}, {3.89339352702288*^9, 3.893393529442668*^9}, {
+  3.893393592834124*^9, 3.8933935937053137`*^9}, {3.893393710963554*^9, 
+  3.893393712106523*^9}, {3.893393796684328*^9, 3.8933938168555193`*^9}, {
+  3.893395687168599*^9, 3.893395701647909*^9}, {3.8934085538933*^9, 
+  3.893408585785737*^9}},
+ CellLabel->"In[68]:=",ExpressionUUID->"3414bf9f-d13c-450b-b146-d0f113026ec6"],
+
+Cell[BoxData[
+ DynamicModuleBox[{}, 
+  TagBox[GridBox[{
+     {
+      ButtonBox["\<\"Genera Punti\"\>",
+       Appearance->Automatic,
+       ButtonFunction:>($CellContext`punti = \
+$CellContext`GeneraPunti[$CellContext`xmin, $CellContext`xmax, \
+$CellContext`ymin, $CellContext`ymax, $CellContext`n]),
+       Evaluator->Automatic,
+       ImageSize->{100, Automatic},
+       Method->"Preemptive"]},
+     {
+      DynamicBox[ToBoxes[
+        Row[{
+         "Le coordinate dei punti del polinomio sono: ", $CellContext`punti}],
+         StandardForm],
+       ImageSizeCache->{729.734375, {4., 13.}}]}
+    },
+    DefaultBaseStyle->"Column",
+    GridBoxAlignment->{"Columns" -> {{Left}}},
+    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+   "Column"],
+  DynamicModuleValues:>{}]], "Output",
+ CellChangeTimes->{
+  3.8934082622782393`*^9, {3.893408563521614*^9, 3.8934085901439257`*^9}},
+ CellLabel->"Out[68]=",ExpressionUUID->"3e0a0459-37f5-4a6a-ba08-96b62bb9bea5"]
+}, Open  ]],
+
+Cell["\<\
+ Dati i punti indicare nella casella di testo qui sotto di che grado \
+\[EGrave] il polinomio unico che ci passa attraverso.\
+\>", "Text",
+ CellChangeTimes->{{3.8933916128284807`*^9, 
+  3.893391639266039*^9}},ExpressionUUID->"b71ece67-f22f-45fe-ab14-\
+730edce0a729"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DynamicModule", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"x", "=", "0"}], ",", 
+     RowBox[{"result", "=", "\"\<\>\""}]}], "}"}], ",", 
+   RowBox[{"Column", "[", 
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"InputField", "[", 
+       RowBox[{
+        RowBox[{"Dynamic", "[", "x", "]"}], ",", "Number"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Dynamic", "[", 
+       RowBox[{"Button", "[", 
+        RowBox[{"\"\<Invia\>\"", ",", 
+         RowBox[{"result", "=", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"x", "==", "grado"}], ",", "\"\<Giusto :)\>\"", ",", 
+            "\"\<Sei un fallimento\>\""}], "]"}]}], ",", " ", 
+         RowBox[{"ImageSize", "->", 
+          RowBox[{"{", 
+           RowBox[{"100", ",", "Automatic"}], "}"}]}]}], "]"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Dynamic", "[", "result", "]"}]}], "\[IndentingNewLine]", "}"}],
+     "]"}]}], "\[IndentingNewLine]", "]"}]], "Input",
+ CellChangeTimes->{{3.893389270635557*^9, 3.893389271080933*^9}, {
+  3.893389398233107*^9, 3.893389485924101*^9}, {3.893389633093219*^9, 
+  3.8933896471646147`*^9}, {3.893389694942539*^9, 3.893389713614983*^9}, {
+  3.8933953341829367`*^9, 3.893395335093905*^9}, {3.893395710336237*^9, 
+  3.893395728637731*^9}, {3.893409282061542*^9, 3.893409288848171*^9}},
+ CellLabel->"In[88]:=",ExpressionUUID->"c4863ba0-fad5-434f-ad62-a94107db2b63"],
+
+Cell[BoxData[
+ DynamicModuleBox[{$CellContext`x$$ = Null, $CellContext`result$$ = 
+  "Sei un fallimento"}, 
+  TagBox[GridBox[{
+     {
+      InputFieldBox[Dynamic[$CellContext`x$$], Number]},
+     {
+      DynamicBox[ToBoxes[
+        Button[
+        "Invia", $CellContext`result$$ = 
+         If[$CellContext`x$$ == $CellContext`grado, "Giusto :)", 
+           "Sei un fallimento"], ImageSize -> {100, Automatic}], StandardForm],
+       ImageSizeCache->{100., {8.673828125, 13.326171875}}]},
+     {
+      DynamicBox[ToBoxes[$CellContext`result$$, StandardForm],
+       ImageSizeCache->{129.890625, {4., 13.}}]}
+    },
+    DefaultBaseStyle->"Column",
+    GridBoxAlignment->{"Columns" -> {{Left}}},
+    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+   "Column"],
+  DynamicModuleValues:>{}]], "Output",
+ CellChangeTimes->{3.893408265532938*^9, 3.893408532653759*^9, 
+  3.8934092903566647`*^9},
+ CellLabel->"Out[88]=",ExpressionUUID->"c02521c1-1de9-4064-87bf-8cd5ca248e46"]
+}, Open  ]],
+
+Cell["\<\
+Ok adesso dati n punti qual \[EGrave] il polinomio di grado minimo che ci \
+passa attraverso?
+La soluzione va scritta in questo formato: \
+\[OpenCurlyDoubleQuote]10+(4/3+(1/3+(-23/72+(-11/90+(31*(-1+x))/720)*(-6+x))*(\
+-2+x))*(-3+x))*(-5+x)*x\[CloseCurlyDoubleQuote]\
+\>", "Text",
+ CellChangeTimes->{{3.893390605740416*^9, 3.893390634705817*^9}, {
+   3.8933981715104094`*^9, 3.893398172109069*^9}, {3.893399907853314*^9, 
+   3.893399909842848*^9}, 3.893400052972542*^9, {3.8934092443523273`*^9, 
+   3.893409262055735*^9}},ExpressionUUID->"c2d63be9-91c2-421d-8484-\
+fa972b52bbd9"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"DynamicModule", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"x", "=", "0"}], ",", 
+     RowBox[{"result", "=", "\"\<\>\""}]}], "}"}], ",", 
+   RowBox[{"Column", "[", 
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"InputField", "[", 
+       RowBox[{
+        RowBox[{"Dynamic", "[", "x", "]"}], ",", "String"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Dynamic", "[", 
+       RowBox[{"Button", "[", 
+        RowBox[{"\"\<Invia\>\"", ",", 
+         RowBox[{"result", "=", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"StringReplace", "[", 
+              RowBox[{
+               RowBox[{"ToString", "[", "x", "]"}], ",", 
+               RowBox[{"\"\< \>\"", "->", "\"\<\>\""}]}], "]"}], " ", "==", 
+             " ", 
+             RowBox[{"StringReplace", "[", 
+              RowBox[{
+               RowBox[{"ToString", "[", 
+                RowBox[{
+                 RowBox[{"Rationalize", "[", "polinomio", "]"}], " ", ",", 
+                 RowBox[{"FormatType", "->", "InputForm"}]}], "]"}], ",", 
+               RowBox[{"\"\< \>\"", "->", "\"\<\>\""}]}], "]"}]}], ",", 
+            "\"\<Giusto :)\>\"", ",", "\"\<Sei un fallimento\>\""}], "]"}]}], 
+         ",", " ", 
+         RowBox[{"ImageSize", "->", 
+          RowBox[{"{", 
+           RowBox[{"100", ",", "Automatic"}], "}"}]}]}], "]"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Dynamic", "[", "result", "]"}]}], "\[IndentingNewLine]", "}"}],
+     "]"}]}], "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Dynamic", "[", 
+  RowBox[{"StringReplace", "[", 
+   RowBox[{
+    RowBox[{"ToString", "[", 
+     RowBox[{
+      RowBox[{"Rationalize", "[", "polinomio", "]"}], " ", ",", 
+      RowBox[{"FormatType", "->", "InputForm"}]}], "]"}], ",", 
+    RowBox[{"\"\< \>\"", "->", "\"\<\>\""}]}], "]"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.89330710180188*^9, 3.8933071030794907`*^9}, {
+   3.893308099701762*^9, 3.893308144851404*^9}, {3.893308287373836*^9, 
+   3.893308298734651*^9}, {3.893308383580854*^9, 3.8933084216885*^9}, {
+   3.893308498178059*^9, 3.893308532985819*^9}, 3.893308601737154*^9, {
+   3.893308705104013*^9, 3.893308707399892*^9}, {3.8933088947287197`*^9, 
+   3.893308912737091*^9}, 3.893308994824494*^9, {3.8933889474331913`*^9, 
+   3.893388966768471*^9}, {3.893389656990774*^9, 3.89338965837668*^9}, 
+   3.8933922052141237`*^9, {3.8933922375277567`*^9, 3.89339233743963*^9}, {
+   3.893392376753763*^9, 3.893392521729044*^9}, {3.893392598133053*^9, 
+   3.8933927354161873`*^9}, {3.893392775006219*^9, 3.893392899741592*^9}, {
+   3.893392930393641*^9, 3.893392949452322*^9}, {3.8933938912863607`*^9, 
+   3.893393927535623*^9}, {3.893394003171825*^9, 3.893394040859261*^9}, {
+   3.893394077446754*^9, 3.8933940823614607`*^9}, {3.893394244322014*^9, 
+   3.893394281409779*^9}, {3.893394637949603*^9, 3.893394667757476*^9}, {
+   3.8933947470379257`*^9, 3.8933948089337873`*^9}, {3.893394901759645*^9, 
+   3.893394920627318*^9}, {3.893394998456493*^9, 3.89339504786055*^9}, {
+   3.893395078923666*^9, 3.8933951881279707`*^9}, {3.893395222861569*^9, 
+   3.893395275786371*^9}, 3.8933953562845383`*^9, {3.893395492073608*^9, 
+   3.893395515246601*^9}, {3.8933955844991217`*^9, 3.893395588049983*^9}, {
+   3.893395652071484*^9, 3.893395677934792*^9}, {3.893395745476616*^9, 
+   3.893395748123863*^9}, 3.893395861981331*^9, {3.893396127393693*^9, 
+   3.893396206291917*^9}, {3.893396237355805*^9, 3.893396261981284*^9}, {
+   3.893396332082841*^9, 3.893396484643116*^9}, {3.893396611076891*^9, 
+   3.893396625387039*^9}, {3.8933966559409523`*^9, 3.893396658584923*^9}, {
+   3.893396697587916*^9, 3.893396750402502*^9}, {3.8933968945402393`*^9, 
+   3.893396920443112*^9}, {3.893397013354782*^9, 3.8933970823863564`*^9}, {
+   3.89339714664482*^9, 3.893397150466893*^9}, {3.893397229571829*^9, 
+   3.893397236912305*^9}, {3.893397271673026*^9, 3.8933972727250233`*^9}, {
+   3.893397336710984*^9, 3.893397343142379*^9}, {3.893397488376074*^9, 
+   3.8933975160837812`*^9}, {3.8933975698040752`*^9, 
+   3.8933976075955143`*^9}, {3.89339769345924*^9, 3.893397724115519*^9}, {
+   3.893397773261032*^9, 3.893397774070505*^9}, {3.8933981355416613`*^9, 
+   3.893398162920248*^9}, {3.893398227522056*^9, 3.893398288848895*^9}, {
+   3.8933984290653276`*^9, 3.893398447488297*^9}, {3.8933986948112164`*^9, 
+   3.8933987351623373`*^9}, {3.89339878374163*^9, 3.893398786779996*^9}, {
+   3.893398827195025*^9, 3.893398827371105*^9}, {3.893398949630702*^9, 
+   3.89339903135406*^9}, {3.89339911211173*^9, 3.8933991128830023`*^9}, {
+   3.893399191561837*^9, 3.893399249396133*^9}, {3.893399284995389*^9, 
+   3.893399304351734*^9}, {3.8933993495232077`*^9, 3.893399395138797*^9}, {
+   3.893399428842063*^9, 3.893399443486554*^9}, {3.8933994852883463`*^9, 
+   3.8933995128521214`*^9}, {3.893399613954111*^9, 3.893399618267724*^9}, {
+   3.893399652901052*^9, 3.893399729458712*^9}, {3.893399762802143*^9, 
+   3.893399765468886*^9}, {3.893399816367127*^9, 3.893399855673985*^9}, {
+   3.8933998970615187`*^9, 3.893399897694907*^9}, {3.8933999819904757`*^9, 
+   3.893400025227289*^9}, {3.893400071602813*^9, 3.8934001121389723`*^9}, {
+   3.893400150458374*^9, 3.893400201724081*^9}, {3.893400266055016*^9, 
+   3.893400364054379*^9}, 3.8934005412292423`*^9, {3.893400601953115*^9, 
+   3.893400615291745*^9}, {3.893405403871564*^9, 3.893405405103211*^9}, {
+   3.893405565397952*^9, 3.8934055951798153`*^9}, {3.8934067411141787`*^9, 
+   3.8934067552358007`*^9}, {3.8934079035302057`*^9, 3.893407927169874*^9}, {
+   3.893408041512148*^9, 3.893408053691473*^9}, {3.8934081254403543`*^9, 
+   3.893408178609242*^9}, {3.8934082262281923`*^9, 3.893408226646461*^9}, {
+   3.893408294273272*^9, 3.893408336527019*^9}, {3.893408619648562*^9, 
+   3.893408624761636*^9}, {3.893408891119581*^9, 3.8934089190876102`*^9}, 
+   3.8934090008430643`*^9, {3.893409069315453*^9, 3.893409128749752*^9}, {
+   3.893409190937892*^9, 3.8934092028832817`*^9}},
+ CellLabel->"In[86]:=",ExpressionUUID->"73531098-421d-4e5e-918f-1ce52c3effbf"],
+
+Cell[BoxData[
+ DynamicModuleBox[{$CellContext`x$$ = 
+  "2+(-3+x)*(1/3+(-25/6+(-2+x)/6)*x)", $CellContext`result$$ = "Giusto :)"}, 
+  TagBox[GridBox[{
+     {
+      InputFieldBox[Dynamic[$CellContext`x$$], String]},
+     {
+      DynamicBox[ToBoxes[
+        Button["Invia", $CellContext`result$$ = If[StringReplace[
+             ToString[$CellContext`x$$], " " -> ""] == StringReplace[
+             ToString[
+              Rationalize[$CellContext`polinomio], FormatType -> InputForm], 
+             " " -> ""], "Giusto :)", "Sei un fallimento"], 
+         ImageSize -> {100, Automatic}], StandardForm],
+       ImageSizeCache->{100., {8.673828125, 13.326171875}}]},
+     {
+      DynamicBox[ToBoxes[$CellContext`result$$, StandardForm],
+       ImageSizeCache->{68.765625, {4., 13.}}]}
+    },
+    DefaultBaseStyle->"Column",
+    GridBoxAlignment->{"Columns" -> {{Left}}},
+    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+   "Column"],
+  DynamicModuleValues:>{}]], "Output",
+ CellChangeTimes->{3.893409033185052*^9, 3.893409130190359*^9, 
+  3.8934092052657623`*^9},
+ CellLabel->"Out[86]=",ExpressionUUID->"cabfc0f0-36c9-4e6b-aef2-edbc6e9385e0"],
+
+Cell[BoxData[
+ DynamicBox[ToBoxes[
+   StringReplace[
+    ToString[
+     Rationalize[$CellContext`polinomio], FormatType -> InputForm], " " -> 
+    ""], StandardForm],
+  ImageSizeCache->{580.6875, {2.35546875, 9.}}]], "Output",
+ CellChangeTimes->{3.893409033185052*^9, 3.893409130190359*^9, 
+  3.8934092053141603`*^9},
+ CellLabel->"Out[87]=",ExpressionUUID->"45082aed-23dc-4bfa-81df-586bb465795a"]
+}, Open  ]],
+
+Cell["\<\
+Ci sono diversi algoritmi che possono essere utilizzati per calcolare il \
+polinomio di interpolazione. Uno di questi \[EGrave] il metodo di Lagrange, \
+che utilizza i polinomi di Lagrange per costruire il polinomio di \
+interpolazione. Un altro metodo \[EGrave] la formula di Newton, che utilizza \
+le differenze divise per costruire il polinomio di interpolazione.
+Inoltre, ci sono anche metodi numerici come la trasformata veloce di Fourier \
+(FFT) che possono essere utilizzati per risolvere il problema dell\
+\[CloseCurlyQuote]interpolazione polinomiale.\
+\>", "Text",
+ CellChangeTimes->{{3.893307717005415*^9, 
+  3.893307743739846*^9}},ExpressionUUID->"20dd0d7e-629a-46c4-9341-\
+c164a45de008"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", "SOLUZIONE", "*)"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"condizione", " ", "=", " ", "False"}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"MostraSoluzione", "[", 
+     RowBox[{"punti_", ",", "xmin_", ",", "xmax_"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"grado", ",", "polinomio"}], "}"}], ",", 
+      RowBox[{
+       RowBox[{"grado", "=", 
+        RowBox[{
+         RowBox[{"Length", "[", "punti", "]"}], "-", "1"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"polinomio", "=", 
+        RowBox[{"InterpolatingPolynomial", "[", 
+         RowBox[{"punti", ",", "x"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"condizione", " ", "=", " ", "True"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"newgrado", " ", "=", " ", "grado"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"newpolinomio", " ", "=", "polinomio"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"newpunti", " ", "=", " ", "punti"}], ";", 
+       "\[IndentingNewLine]", "polinomio"}]}], "\[IndentingNewLine]", "]"}]}],
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Plotter", "[", "]"}], ":=", " ", 
+    RowBox[{"Column", "[", 
+     RowBox[{"{", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Row", "[", 
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<Il grado del polinomio unico che passa attraverso i punti dati \
+\[EGrave]: \>\"", ",", "newgrado"}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"Dynamic", "[", 
+        RowBox[{"Row", "[", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<Il polinomio unico che passa attraverso i punti dati \
+\[EGrave]: \>\"", ",", 
+           RowBox[{"newpolinomio", "//", "Expand"}]}], "}"}], "]"}], "]"}], 
+       ",", "\[IndentingNewLine]", 
+       RowBox[{"Row", "[", 
+        RowBox[{"{", 
+         RowBox[{"Show", "[", 
+          RowBox[{
+           RowBox[{"ListPlot", "[", "newpunti", "]"}], ",", 
+           RowBox[{"Plot", "[", 
+            RowBox[{"newpolinomio", ",", 
+             RowBox[{"{", 
+              RowBox[{"x", ",", "xmin", ",", "xmax"}], "}"}]}], "]"}], ",", 
+           RowBox[{"ImageSize", "->", 
+            RowBox[{"{", 
+             RowBox[{"400", ",", "Automatic"}], "}"}]}]}], "]"}], "}"}], 
+        "]"}]}], "\[IndentingNewLine]", "}"}], "]"}]}], "\n", "\t", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Column", "[", 
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Button", "[", 
+       RowBox[{"\"\<MostraSoluzione\>\"", ",", 
+        RowBox[{"polinomio", "=", 
+         RowBox[{"MostraSoluzione", "[", 
+          RowBox[{"punti", ",", "xmin", ",", "xmax"}], "]"}]}], ",", 
+        RowBox[{"ImageSize", "->", 
+         RowBox[{"{", 
+          RowBox[{"100", ",", "Automatic"}], "}"}]}]}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Dynamic", "[", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"condizione", " ", "==", " ", "True"}], ",", " ", 
+         RowBox[{"Column", "[", 
+          RowBox[{"{", 
+           RowBox[{"Plotter", "[", "]"}], "}"}], "]"}], ",", " ", 
+         "\"\<\>\""}], "]"}], " ", "]"}]}], "\[IndentingNewLine]", "}"}], 
+    "]"}], "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.893309100509734*^9, 3.893309101914052*^9}, 
+   3.8933953580218563`*^9, {3.893395544468347*^9, 3.893395546459133*^9}, 
+   3.8934054847717533`*^9, {3.8934056756625834`*^9, 3.893405689524955*^9}, {
+   3.8934058567311087`*^9, 3.893405861349341*^9}, {3.893405907665771*^9, 
+   3.893405910855506*^9}, {3.8934060056109858`*^9, 3.893406096138888*^9}, {
+   3.8934061321730013`*^9, 3.8934061416806507`*^9}, {3.893406224860496*^9, 
+   3.893406229848645*^9}, {3.893406289189603*^9, 3.893406324651739*^9}, {
+   3.893406357945713*^9, 3.893406609170306*^9}, {3.8934066618557*^9, 
+   3.89340669239699*^9}, {3.893406789366716*^9, 3.893406917910866*^9}, {
+   3.893406950738937*^9, 3.8934070026444197`*^9}, {3.8934070491471567`*^9, 
+   3.893407108597756*^9}, {3.8934071460717573`*^9, 3.89340725147759*^9}, {
+   3.893407314932968*^9, 3.893407427161436*^9}, {3.8934074837568274`*^9, 
+   3.893407486261386*^9}, {3.8934075415818357`*^9, 3.893407604922131*^9}, {
+   3.8934076522999163`*^9, 3.8934077100466537`*^9}, {3.893407778672113*^9, 
+   3.893407878593515*^9}, {3.893408021185897*^9, 3.893408030969367*^9}, {
+   3.893409322839176*^9, 3.893409328564747*^9}},
+ CellLabel->"In[93]:=",ExpressionUUID->"2aa6cfce-34b1-454d-b6eb-0cd87778c6ee"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     ButtonBox["\<\"MostraSoluzione\"\>",
+      Appearance->Automatic,
+      ButtonFunction:>($CellContext`polinomio = \
+$CellContext`MostraSoluzione[$CellContext`punti, $CellContext`xmin, \
+$CellContext`xmax]),
+      Evaluator->Automatic,
+      ImageSize->{100, Automatic},
+      Method->"Preemptive"]},
+    {
+     DynamicBox[ToBoxes[
+       If[$CellContext`condizione == True, 
+        Column[{
+          $CellContext`Plotter[]}], ""], StandardForm],
+      ImageSizeCache->{724., {152.6875, 158.3125}}]}
+   },
+   DefaultBaseStyle->"Column",
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Column"]], "Output",
+ CellChangeTimes->{{3.8934093122787027`*^9, 3.893409330107663*^9}},
+ CellLabel->"Out[96]=",ExpressionUUID->"d511b7f3-8277-488b-bf23-63e5d66f19b5"]
+}, Open  ]]
+},
+WindowSize->{1864.5, 1032.},
+WindowMargins->{{Automatic, 0}, {0, Automatic}},
+TaggingRules-><|"TryRealOnly" -> False|>,
+SpellingDictionaries->{"CorrectWords"->{"polinomio"}},
+FrontEndVersion->"13.2 for Linux x86 (64-bit) (January 31, 2023)",
+StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
+  CharacterEncoding -> "UTF-8"],
+ExpressionUUID->"339d258c-bef6-4278-8204-b45dc93147dc"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 307, 6, 40, "Input",ExpressionUUID->"be219ff8-5338-42be-883a-75a464734fec"],
+Cell[868, 28, 1733, 31, 310, "Text",ExpressionUUID->"10504e94-3d3d-46e6-a6c3-c25a7f344505"],
+Cell[2604, 61, 4314, 100, 560, "Input",ExpressionUUID->"93215a60-0d13-4786-95d7-6f5ef6445095"],
+Cell[6921, 163, 230, 5, 34, "Text",ExpressionUUID->"dac9b4f4-e676-444c-ba67-340fa66dfd47"],
+Cell[CellGroupData[{
+Cell[7176, 172, 1074, 25, 44, "Input",ExpressionUUID->"6cd7296e-be49-4c00-ae7f-2a3863f775dc"],
+Cell[8253, 199, 693, 18, 63, "Output",ExpressionUUID->"7bcae4ec-1099-4e79-83cb-23a98cd8cb55"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8983, 222, 1554, 33, 133, "Input",ExpressionUUID->"3414bf9f-d13c-450b-b146-d0f113026ec6"],
+Cell[10540, 257, 985, 26, 70, "Output",ExpressionUUID->"3e0a0459-37f5-4a6a-ba08-96b62bb9bea5"]
+}, Open  ]],
+Cell[11540, 286, 276, 6, 34, "Text",ExpressionUUID->"b71ece67-f22f-45fe-ab14-730edce0a729"],
+Cell[CellGroupData[{
+Cell[11841, 296, 1474, 33, 152, "Input",ExpressionUUID->"c4863ba0-fad5-434f-ad62-a94107db2b63"],
+Cell[13318, 331, 994, 24, 98, "Output",ExpressionUUID->"c02521c1-1de9-4064-87bf-8cd5ca248e46"]
+}, Open  ]],
+Cell[14327, 358, 589, 11, 57, "Text",ExpressionUUID->"c2d63be9-91c2-421d-8484-fa972b52bbd9"],
+Cell[CellGroupData[{
+Cell[14941, 373, 6107, 105, 175, "Input",ExpressionUUID->"73531098-421d-4e5e-918f-1ce52c3effbf"],
+Cell[21051, 480, 1166, 26, 98, "Output",ExpressionUUID->"cabfc0f0-36c9-4e6b-aef2-edbc6e9385e0"],
+Cell[22220, 508, 396, 9, 40, "Output",ExpressionUUID->"45082aed-23dc-4bfa-81df-586bb465795a"]
+}, Open  ]],
+Cell[22631, 520, 709, 12, 80, "Text",ExpressionUUID->"20dd0d7e-629a-46c4-9341-c164a45de008"],
+Cell[CellGroupData[{
+Cell[23365, 536, 4594, 101, 537, "Input",ExpressionUUID->"2aa6cfce-34b1-454d-b6eb-0cd87778c6ee"],
+Cell[27962, 639, 873, 23, 364, "Output",ExpressionUUID->"d511b7f3-8277-488b-bf23-63e5d66f19b5"]
+}, Open  ]]
+}
+]
+*)
+
