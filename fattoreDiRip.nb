@@ -1,0 +1,160 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      5625,        152]
+NotebookOptionsPosition[      5152,        135]
+NotebookOutlinePosition[      5544,        151]
+CellTagsIndexPosition[      5501,        148]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"stringaEstesa", " ", "=", " ", "\"\<\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"extendString", "[", 
+    RowBox[{"stringa_", ",", "fattoreRipetizione_"}], "]"}], ":=", " ", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"str", " ", "=", " ", "stringa"}], ",", " ", 
+       RowBox[{"rep", " ", "=", " ", "fattoreRipetizione"}]}], "}"}], ",", 
+     RowBox[{"{", "\n", 
+      RowBox[{"stringaEstesa", " ", "=", " ", 
+       RowBox[{"StringJoin", "[", 
+        RowBox[{"Riffle", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"StringRepeat", "[", 
+             RowBox[{"#", ",", " ", "fattoreRipetizione"}], "]"}], " ", "&"}],
+            " ", "/@", " ", 
+           RowBox[{"Characters", "[", "stringa", "]"}]}], ",", " ", 
+          "\"\<\>\""}], "]"}], "]"}]}], "\n", "}"}]}], "]"}]}], "\n"}], "\n", 
+
+ RowBox[{
+  RowBox[{"DynamicModule", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"str", "=", "\"\<\>\""}], ",", " ", 
+      RowBox[{"repetition", "=", "1"}]}], "}"}], ",", 
+    RowBox[{"Column", "[", 
+     RowBox[{"{", "\n", 
+      RowBox[{"\"\<Inserisci una stringa\>\"", ",", "\[IndentingNewLine]", 
+       RowBox[{"InputField", "[", 
+        RowBox[{
+         RowBox[{"Dynamic", "[", "str", "]"}], ",", "String"}], "]"}], ",", 
+       "\[IndentingNewLine]", "\"\<Inserisci un fattore di ripetizione\>\"", 
+       ",", "\n", 
+       RowBox[{"InputField", "[", 
+        RowBox[{
+         RowBox[{"Dynamic", "[", "repetition", "]"}], ",", "Number"}], "]"}], 
+       ",", "\[IndentingNewLine]", 
+       RowBox[{"Button", "[", 
+        RowBox[{"\"\<Estendi Stringa\>\"", ",", " ", 
+         RowBox[{"extendString", "[", 
+          RowBox[{"str", ",", " ", "repetition"}], "]"}], ",", " ", 
+         RowBox[{"ImageSize", "->", 
+          RowBox[{"{", 
+           RowBox[{"200", ",", "50"}], "}"}]}], ",", " ", 
+         RowBox[{"BaseStyle", " ", "->", " ", 
+          RowBox[{"{", 
+           RowBox[{"FontSize", " ", "->", " ", "16"}], "}"}]}]}], "]"}], ",", 
+       "\n", 
+       RowBox[{"Dynamic", "@", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"stringaEstesa", " ", "!=", " ", "\"\<\>\""}], ",", " ", 
+          RowBox[{"StringJoin", "[", 
+           RowBox[{
+           "\"\<La stringa estesa \[EGrave]: \>\"", ",", " ", 
+            "stringaEstesa"}], "]"}], ",", " ", "\"\<\>\""}], "]"}]}]}], 
+      "\[IndentingNewLine]", "}"}], "]"}]}], "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Code",
+ CellChangeTimes->{{3.893666204897295*^9, 3.893666273172579*^9}, {
+  3.893666304228896*^9, 3.893666304372478*^9}, {3.893666342040904*^9, 
+  3.893666471184935*^9}, {3.893666598817865*^9, 3.893666871055603*^9}, {
+  3.893666924639348*^9, 3.893667154203495*^9}, {3.893667193441639*^9, 
+  3.8936673362725143`*^9}, {3.893667386858337*^9, 3.893667392159923*^9}, {
+  3.8936674279726973`*^9, 3.893667464597537*^9}, {3.893667622461803*^9, 
+  3.893667658525937*^9}, {3.8936677435227213`*^9, 3.893667761350705*^9}, {
+  3.893667870547241*^9, 3.893667921032878*^9}},
+ CellLabel->"In[93]:=",ExpressionUUID->"6dc7a383-a458-48be-bce9-f50cf34f12f4"],
+
+Cell[BoxData[
+ DynamicModuleBox[{$CellContext`str$$ = "ciao", $CellContext`repetition$$ = 
+  4}, 
+  TagBox[GridBox[{
+     {"\<\"Inserisci una stringa\"\>"},
+     {
+      InputFieldBox[Dynamic[$CellContext`str$$], String]},
+     {"\<\"Inserisci un fattore di ripetizione\"\>"},
+     {
+      InputFieldBox[Dynamic[$CellContext`repetition$$], Number]},
+     {
+      ButtonBox["\<\"Estendi Stringa\"\>",
+       Appearance->Automatic,
+       BaseStyle->{FontSize -> 16},
+       ButtonFunction:>$CellContext`extendString[$CellContext`str$$, \
+$CellContext`repetition$$],
+       Evaluator->Automatic,
+       ImageSize->{200, 50},
+       Method->"Preemptive"]},
+     {
+      DynamicBox[ToBoxes[
+        If[$CellContext`stringaEstesa != "", 
+         "La stringa estesa \[EGrave]: " <> $CellContext`stringaEstesa, ""], 
+        StandardForm],
+       ImageSizeCache->{282.703125, {4., 13.}}]}
+    },
+    DefaultBaseStyle->"Column",
+    GridBoxAlignment->{"Columns" -> {{Left}}},
+    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+   "Column"],
+  DynamicModuleValues:>{}]], "Output",
+ CellChangeTimes->{
+  3.89366746599094*^9, {3.893667631131627*^9, 3.893667659168956*^9}, 
+   3.8936677622156353`*^9, {3.893667910362801*^9, 3.89366792164612*^9}},
+ CellLabel->"Out[95]=",ExpressionUUID->"bd396d65-7a15-4330-ace6-f9cc25f353c8"]
+}, Open  ]]
+},
+WindowSize->{1440, 762},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"13.2 for Linux x86 (64-bit) (January 31, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"8c0ed802-c66f-456a-a2ba-2fea264d52b9"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 3213, 74, 340, "Code",ExpressionUUID->"6dc7a383-a458-48be-bce9-f50cf34f12f4"],
+Cell[3796, 98, 1340, 34, 192, "Output",ExpressionUUID->"bd396d65-7a15-4330-ace6-f9cc25f353c8"]
+}, Open  ]]
+}
+]
+*)
+
