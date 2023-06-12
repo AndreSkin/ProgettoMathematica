@@ -20,7 +20,7 @@ BeginPackage["DEC`"]
 
 MsgDecode::usage = "Decode[x] prende in input una stringa x e la decodifica."
 
-Begin["Private"]
+Begin["Private`"]
 
 MsgDecode[input_List] :=
 DynamicModule[{i},

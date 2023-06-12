@@ -24,7 +24,7 @@ StrEncode::usage = "Encode[x] prende in input una stringa x e la espande."
 (* Definizione dell'uso della variabile ComputedValues *)
 ComputedValues::usage = "ComputedValues \[EGrave] una variabile pubblica che contiene i valori computati da StrEncode."
 
-Begin["`Private`"]
+Begin["Private`"]
 
 (* Definizione della funzione StrEncode *)
 StrEncode[inputString_String, maxErrors_Integer] :=
