@@ -98,7 +98,7 @@ Module[{i},
     (* Mostra un grafico dei punti con le etichette *)
     Column[
         {
-            ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Medium],
+            ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large],
             PlotPoly[polynomial, asciiList, points, labeledPointsList]
         }
     ]
@@ -110,7 +110,7 @@ PlotPoly[polynomial_, asciiList_List, points_List, labeledPointsList_List] :=
 Module[{i},
     (* Mostra il polinomio e i punti su un grafico *)
     Show[
-        Plot[polynomial, {x, 1, Length[asciiList]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Medium],
+        Plot[polynomial, {x, 1, Length[asciiList]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large],
         ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}]
     ]
 ]
@@ -134,7 +134,7 @@ Module[{i},
     
     (* Mostra il polinomio espanso e i punti su un grafico *)
     Show[
-        Plot[polynomial, {x, 1, Length[expandedPoints]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Medium],
+        Plot[polynomial, {x, 1, Length[expandedPoints]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large],
         ListPlot[labeledPointsExpandedList, PlotStyle -> {PointSize[Medium], Blue}]
     ]
 ]
