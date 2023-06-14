@@ -22,54 +22,80 @@ MsgDecode::usage = "Decode[x] prende in input una stringa x e la decodifica."
 
 Begin["Private`"]
 
-MsgDecode[input_List] :=
-DynamicModule[{i},
-(* Estrae i valori dalla lista di input *)
-corruptedString = input[[1]];
-errorsPos = input[[2]];
-strLen = input[[3]];
-maxErrors = input[[4]];
+MsgDecode[input_List] := DynamicModule[{i},
+    (* Estrae i valori dalla lista di input *)
+    corruptedString = input[[1]];
+    errorsPos = input[[2]];
+    strLen = input[[3]];
+    maxErrors = input[[4]];
 
-(* Converte la stringa corrotta in una lista di valori ASCII *)
-asciiList = ToCharacterCode[corruptedString];
+    (* Converte la stringa corrotta in una lista di valori ASCII *)
+    asciiList = ToCharacterCode[corruptedString];
 
-(* Converte la stringa corrotta in una lista di caratteri *)
-charList = Characters[corruptedString];
+    (* Converte la stringa corrotta in una lista di caratteri *)
+    charList = Characters[corruptedString];
 
-(* Calcola la posizione dei caratteri non corrotti *)
-charsPos = Complement[Range[strLen], errorsPos];
+    (* Calcola la posizione dei caratteri non corrotti *)
+    charsPos = Complement[Range[strLen], errorsPos];
 
-(* Costruisce una lista di punti con etichette per il grafico *)
-points = Transpose[{charsPos, asciiList}];
-labeledPoints = Transpose[{points, charList}];
-labeledPointsList = Labeled[#[[1]], #[[2]], Above] & /@ labeledPoints;
+    (* Costruisce una lista di punti con etichette per il grafico *)
+    points = Transpose[{charsPos, asciiList}];
+    labeledPoints = Transpose[{points, charList}];
+    labeledPointsList = Labeled[#[[1]], #[[2]], Above] & /@ labeledPoints;
 
-(* Ricostruisce il polinomio interpolante *)
-reconstructedPoly = Expand[InterpolatingPolynomial[points, x]];
+    (* Ricostruisce il polinomio interpolante *)
+    reconstructedPoly = Expand[InterpolatingPolynomial[points, x]];
 
-(* Richiama la funzione per ricostruire la stringa originale *)
-ReconstructString[reconstructedPoly, strLen, maxErrors];
+    (* Richiama la funzione per ricostruire la stringa originale *)
+    ReconstructString[reconstructedPoly, strLen, maxErrors];
 
-(* Richiama la funzione per visualizzare il polinomio ricostruito *)
-PlotReconstructedPoly[reconstructedPoly, labeledPointsList, strLen]
+    (* Richiama la funzione per visualizzare il polinomio ricostruito *)
+    PlotReconstructedPoly[reconstructedPoly, labeledPointsList, strLen]
 ]
+
+ReconstructString[reconstructedPoly_, strLen_, maxErrors_] := DynamicModule[{i},
+    (* Calcola i punti di interpolazione aggiuntivi *)
+    additionalPoints = Table[{i, reconstructedPoly /. x -> i}, {i, strLen + maxErrors}];
+
+    (* Estrae i valori ASCII dalla lista dei punti aggiuntivi *)
+    asciiListExpanded = Round[Last /@ additionalPoints];
+
+    (* Converte la lista di valori ASCII in una stringa *)
+    reconstructedString = FromCharacterCode[asciiListExpanded];
+    
+    (* Mostra la stringa ricostruita *)
+    Row[{Style["Reconstructed String: ", FontSize -> 24], Style[reconstructedString, FontSize -> 24]}]
+]
+
+PlotReconstructedPoly[reconstructedPoly_, labeledPointsList_, strLen_] := DynamicModule[{i},
+    (* Mostra il polinomio ricostruito e i punti su un grafico *)
+    GraphicsColumn[
+        {
+            ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {1000,400}],
+            Plot[reconstructedPoly, {x, 1, strLen + 1}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {1000,400}],
+            ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {1000,400}]
+        },
+        Spacings -> 20
+    ]
+]
+
 
 
 
 (* Definizione della funzione PlotReconstructedPoly *)
 PlotReconstructedPoly[reconstructedPoly_, labeledPointsList_List, strLen_Integer] :=
-Module[{i},
-(* Mostra un grafico dei punti e del polinomio ricostruito *)
-Column[
-{
-	ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Medium],
-	Show[
-		Plot[reconstructedPoly, {x, 1, strLen}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Medium],
-		ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Medium]
-	]
-}
-]
-]
+  Module[{i},
+    (* Mostra un grafico dei punti e del polinomio ricostruito *)
+    Grid[{
+      {ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue},
+        AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {1000,400}], SpanFromLeft},
+      {Show[Plot[reconstructedPoly, {x, 1, strLen}, PlotStyle -> Red,
+          AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {1000,400}],
+        ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue},
+          AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {1000,400}]], SpanFromLeft}
+    }, Spacings -> {0, 10}]
+  ]
+
 
 
 (* Definizione della funzione ReconstructString *)

@@ -88,6 +88,7 @@ DynamicModule[{i},
 
 
 
+
 (* Definizione della funzione PlotString *)
 PlotString[polynomial_, asciiList_List, charlist_List, points_List] :=
 Module[{i},
@@ -98,11 +99,12 @@ Module[{i},
     (* Mostra un grafico dei punti con le etichette *)
     Column[
         {
-            ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large],
+            ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large, BaseStyle -> {FontSize -> 24}],
             PlotPoly[polynomial, asciiList, points, labeledPointsList]
         }
     ]
 ]
+
 
 
 (* Definizione della funzione PlotPoly *)
@@ -110,10 +112,12 @@ PlotPoly[polynomial_, asciiList_List, points_List, labeledPointsList_List] :=
 Module[{i},
     (* Mostra il polinomio e i punti su un grafico *)
     Show[
-        Plot[polynomial, {x, 1, Length[asciiList]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large],
+        Plot[polynomial, {x, 1, Length[asciiList]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large, BaseStyle -> {FontSize -> 24}],
         ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}]
     ]
 ]
+
+
 
 
 (* Definizione della funzione ExpandString *)
@@ -134,10 +138,12 @@ Module[{i},
     
     (* Mostra il polinomio espanso e i punti su un grafico *)
     Show[
-        Plot[polynomial, {x, 1, Length[expandedPoints]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large],
+        Plot[polynomial, {x, 1, Length[expandedPoints]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large, BaseStyle -> {FontSize -> 24}],
         ListPlot[labeledPointsExpandedList, PlotStyle -> {PointSize[Medium], Blue}]
     ]
 ]
+
+
 
 
 (* Definizione della funzione StringCorruption *)
@@ -173,6 +179,7 @@ Module[{i},
     (* Stampa i valori calcolati *)
     Print[ComputedValues]
 ]
+
 
 
 End[]
