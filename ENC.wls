@@ -1,25 +1,24 @@
 #!/usr/bin/env wolframscript
 (* ::Package:: *)
 
-(* :Title: BestExample *)
-(* :Context: BestExample` *)
-(* :Author: GS *)
-(* :Summary: an example of good programming style *)
-(* :Copyright: GS 2023 *)
+(* :Title: ENC.wls *)
+(* :Context: ENC` *)
+(* :Author: Gruppo 1 *)
+(* :Summary: Funzioni di espansione e corruzione di messaggi per mezzo di Reed-Solomon *)
+(* :Copyright: CC BY-SA*)
 (* :Package Version: 1 *)
-(* :Mathematica Version: 13 *)
-(* :History: last modified 27/3/2023 *)
-(* :Keywords: programming style, local variables *)
-(* :Sources: biblio *)
+(* :Mathematica Version: 13.2 *)
+(* :History: last modified 16/06/23 *)
+(* :Keywords: Reed-Solomon, encryption*)
+(* :Sources: V. notebook.nb*)
 (* :Limitations: this is for educational purposes only. *)
 (* :Discussion: *)
-(* :Requirements: *)
-(* :Warning: package Context is not defined *)
+(* :Requirements: Package DEC.wls *)
 
 BeginPackage["ENC`"]
 
 (* Definizione dell'uso della funzione StrEncode *)
-StrEncode::usage = "Encode[x] prende in input una stringa x e la espande."
+StrEncode::usage = "Encode[x, err] prende in input una stringa x e la espande secondo il numero massimo di errori tollerabili err."
 
 (* Definizione dell'uso della variabile ComputedValues *)
 ComputedValues::usage = "ComputedValues \[EGrave] una variabile pubblica che contiene i valori computati da StrEncode."

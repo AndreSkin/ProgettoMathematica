@@ -1,24 +1,23 @@
 #!/usr/bin/env wolframscript
 (* ::Package:: *)
 
-(* :Title: BestExample *)
-(* :Context: BestExample` *)
-(* :Author: GS *)
-(* :Summary: an example of good programming style *)
-(* :Copyright: GS 2023 *)
+(* :Title: DEC.wls *)
+(* :Context: DEC` *)
+(* :Author: Gruppo 1 *)
+(* :Summary: Funzioni di decodifica di messaggi corrotti per mezzo di Reed-Solomon *)
+(* :Copyright: CC BY-SA*)
 (* :Package Version: 1 *)
-(* :Mathematica Version: 13 *)
-(* :History: last modified 27/3/2023 *)
-(* :Keywords: programming style, local variables *)
-(* :Sources: biblio *)
+(* :Mathematica Version: 13.2 *)
+(* :History: last modified 16/06/23 *)
+(* :Keywords: Reed-Solomon, decryption*)
+(* :Sources: V. notebook.nb*)
 (* :Limitations: this is for educational purposes only. *)
 (* :Discussion: *)
-(* :Requirements: *)
-(* :Warning: package Context is not defined *)
+(* :Requirements: Package ENC.wls *)
 
 BeginPackage["DEC`"]
 
-MsgDecode::usage = "Decode[x] prende in input una stringa x e la decodifica."
+MsgDecode::usage = "Decode[x] prende in input un messaggio x generato da ENC.wls e lo decodifica."
 
 Begin["Private`"]
 
@@ -53,36 +52,9 @@ MsgDecode[input_List] := DynamicModule[{i},
     PlotReconstructedPoly[reconstructedPoly, labeledPointsList, strLen]
 ]
 
-ReconstructString[reconstructedPoly_, strLen_, maxErrors_] := DynamicModule[{i},
-    (* Calcola i punti di interpolazione aggiuntivi *)
-    additionalPoints = Table[{i, reconstructedPoly /. x -> i}, {i, strLen + maxErrors}];
-
-    (* Estrae i valori ASCII dalla lista dei punti aggiuntivi *)
-    asciiListExpanded = Round[Last /@ additionalPoints];
-
-    (* Converte la lista di valori ASCII in una stringa *)
-    reconstructedString = FromCharacterCode[asciiListExpanded];
-    
-    (* Mostra la stringa ricostruita *)
-    Row[{Style["Reconstructed String: ", FontSize -> 24], Style[reconstructedString, FontSize -> 24]}]
-]
-
-PlotReconstructedPoly[reconstructedPoly_, labeledPointsList_, strLen_] := DynamicModule[{i},
-    (* Mostra il polinomio ricostruito e i punti su un grafico *)
-    GraphicsColumn[
-        {
-            ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {1000,400}],
-            Plot[reconstructedPoly, {x, 1, strLen + 1}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {1000,400}],
-            ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {1000,400}]
-        },
-        Spacings -> 20
-    ]
-]
-
-
-
 
 (* Definizione della funzione PlotReconstructedPoly *)
+
 PlotReconstructedPoly[reconstructedPoly_, labeledPointsList_List, strLen_Integer] :=
   Module[{i},
     (* Mostra un grafico dei punti e del polinomio ricostruito *)
@@ -93,9 +65,8 @@ PlotReconstructedPoly[reconstructedPoly_, labeledPointsList_List, strLen_Integer
           AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {1000,400}],
         ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue},
           AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {1000,400}]], SpanFromLeft}
-    }, Spacings -> {0, 10}]
+    }, Spacings -> {5,5}]
   ]
-
 
 
 (* Definizione della funzione ReconstructString *)
@@ -110,7 +81,7 @@ reconstructedAsciiList = Round[Last /@ reconstructedPoints];
 reconstructedString = FromCharacterCode[reconstructedAsciiList];
 
 (* Stampa la stringa ricostruita *)
-Print[reconstructedString];
+Print["La stringa ricostruita \[EGrave]: " <> ToString[reconstructedString]];
 ]
 
 
