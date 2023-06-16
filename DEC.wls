@@ -80,8 +80,8 @@ reconstructedAsciiList = Round[Last /@ reconstructedPoints];
 (* Converte la lista di valori ASCII in una stringa ricostruita *)
 reconstructedString = FromCharacterCode[reconstructedAsciiList];
 
-(* Stampa la stringa ricostruita *)
-Print["La stringa ricostruita \[EGrave]: " <> ToString[reconstructedString]];
+(* Stampa la stringa ricostruita AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA *)
+(*Print["La stringa ricostruita \[EGrave]: " <> ToString[reconstructedString]];*)
 ]
 
 
