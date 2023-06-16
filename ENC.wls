@@ -176,8 +176,11 @@ Module[{i},
     (* Memorizza i valori calcolati nella variabile ComputedValues *)
     ComputedValues = {corruptedString, errorsPos, StrLen, maxErrors};
     
+    Column[{
+    StringJoin["Stringa corrotta: ", corruptedString],
+    StringJoin["Lunghezza della stringa espansa: ", ToString[StrLen]]}]
     (* Stampa i valori calcolati *)
-    Print[ComputedValues]
+    (*Print[ComputedValues]*)
 ]
 
 
