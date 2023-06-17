@@ -8,7 +8,7 @@
 (* :Copyright: CC BY-SA*)
 (* :Package Version: 1 *)
 (* :Mathematica Version: 13.2 *)
-(* :History: last modified 16/06/23 *)
+(* :History: last modified 17/06/23 *)
 (* :Keywords: Reed-Solomon, decryption*)
 (* :Sources: V. notebook.nb*)
 (* :Limitations: this is for educational purposes only. *)
@@ -18,10 +18,10 @@
 BeginPackage["DEC`"]
 
 MsgDecode::usage = "Decode[x] prende in input un messaggio x generato da ENC.wls e lo decodifica."
-
+(*toReturn::usage ="abcd"*)
 Begin["Private`"]
 
-MsgDecode[input_List] := DynamicModule[{i},
+MsgDecode[input_List] := Module[{i},
     (* Estrae i valori dalla lista di input *)
     corruptedString = input[[1]];
     errorsPos = input[[2]];
@@ -46,27 +46,34 @@ MsgDecode[input_List] := DynamicModule[{i},
     reconstructedPoly = Expand[InterpolatingPolynomial[points, x]];
 
     (* Richiama la funzione per ricostruire la stringa originale *)
-    ReconstructString[reconstructedPoly, strLen, maxErrors];
+    recStr = ReconstructString[reconstructedPoly, strLen, maxErrors];
 
     (* Richiama la funzione per visualizzare il polinomio ricostruito *)
-    PlotReconstructedPoly[reconstructedPoly, labeledPointsList, strLen]
+    grafici = PlotReconstructedPoly[reconstructedPoly, labeledPointsList, strLen];
+    
+    toReturn = {recStr, grafici};
+    Return[toReturn];
 ]
 
 
 (* Definizione della funzione PlotReconstructedPoly *)
-
-PlotReconstructedPoly[reconstructedPoly_, labeledPointsList_List, strLen_Integer] :=
+  PlotReconstructedPoly[reconstructedPoly_, labeledPointsList_List, strLen_Integer] :=
+  Return[
   Module[{i},
     (* Mostra un grafico dei punti e del polinomio ricostruito *)
     Grid[{
-      {ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue},
-        AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {1000,400}], SpanFromLeft},
+      {ListPlot[labeledPointsList, PlotStyle -> {PointSize[Large], Blue},
+        AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {600, 400}, 
+        LabelStyle -> {FontSize -> 18}], SpanFromLeft},
       {Show[Plot[reconstructedPoly, {x, 1, strLen}, PlotStyle -> Red,
-          AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {1000,400}],
-        ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue},
-          AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {1000,400}]], SpanFromLeft}
-    }, Spacings -> {5,5}]
-  ]
+          AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {600, 400}, 
+          LabelStyle -> {FontSize -> 18}],
+        ListPlot[labeledPointsList, PlotStyle -> {PointSize[Large], Blue},
+          AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {600, 400}, 
+          LabelStyle -> {FontSize -> 18}]], SpanFromLeft}
+    }, Spacings -> {5, 5}]
+  ]]
+
 
 
 (* Definizione della funzione ReconstructString *)
@@ -80,7 +87,9 @@ reconstructedAsciiList = Round[Last /@ reconstructedPoints];
 (* Converte la lista di valori ASCII in una stringa ricostruita *)
 reconstructedString = FromCharacterCode[reconstructedAsciiList];
 
-(* Stampa la stringa ricostruita AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA *)
+Return[reconstructedString];
+
+(* Stampa la stringa ricostruita*)
 (*Print["La stringa ricostruita \[EGrave]: " <> ToString[reconstructedString]];*)
 ]
 
