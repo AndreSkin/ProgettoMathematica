@@ -1,7 +1,24 @@
 #!/usr/bin/env wolframscript
 (* ::Package:: *)
 
+(* :Title: ENC.wls *)
+(* :Context: Erasure` *)
+(* :Author: Gruppo 1 *)
+(* :Summary: Funzione per fare bit flip *)
+(* :Copyright: CC BY-SA*)
+(* :Package Version: 1 *)
+(* :Mathematica Version: 13.3 *)
+(* :History: last modified 8/07/23 *)
+(* :Keywords: Reed-Solomon, encryption*)
+(* :Sources: V. tutorial.nb*)
+(* :Limitations: this is for educational purposes only. *)
+(* :Discussion: *)
+(* :Requirements: *)
+
+
 BeginPackage["Erasure`"]
+(* Definizione dell'uso della funzione StrEncode *)
+CorruptBit::usage = "CorruptBit[stringa] effettua bit flip di un bit casuale della stringa data"
 
 Begin["`Private`"]
 
@@ -20,7 +37,7 @@ StampaRisposta[lista_, newlista_, FlippedString_] :=
 
 (* Funzione per corrompere un bit *)
 (* Controlla se la stringa non \[EGrave] vuota *)
-CorruptBit[string_] :=
+CorruptBit[string_String] :=
   Module[{str = string, bitStringa, lista, newlista, lunghezza, numeroCasuale, binaryList, binaryString, FlippedString},
     If[StringLength[str] > 0,
       (* Converte la stringa in una sequenza di codici ASCII e successivamente in una rappresentazione binaria *)
@@ -42,7 +59,8 @@ CorruptBit[string_] :=
         (* Ricrea una stringa a partire dalla lista di bit modificata *)
         FlippedString = FromCharacterCode[FromDigits[#, 2] & /@ StringPartition[binaryString, 8]];
       ];
-      StampaRisposta[lista, newlista, FlippedString]
+      If[Length[lista]>0,
+      StampaRisposta[lista, newlista, FlippedString]]
     ]
   ]
 
@@ -51,6 +69,3 @@ CorruptBit[string_] :=
 End[]
 
 EndPackage[]
-
-
-\[AliasDelimiter]
