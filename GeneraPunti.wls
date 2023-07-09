@@ -58,7 +58,6 @@ newpolinomio=polinomio;
 newpunti=punti;
 polinomio;
 myList = {newgrado, newpolinomio, newpunti};
-Print[myList];
 Return[myList];
 ]
 
