@@ -20,6 +20,7 @@ BeginPackage["GeneraPunti`"]
 (* Definizione dell'uso della funzione StrEncode *)
 GeneraPunti::usage = "GeneraPunti[xmin,xmax,ymin,ymax,n] "
 SolGen::usage = "SolGen[punti,xmin,xmax] "
+x;
 
 Begin["`Private`"]
 
@@ -32,10 +33,20 @@ polinomio=""; (*Inizializza una stringa vuota per il polinomio*)
 grado=n-1; (*Calcola il grado del polinomio come n-1*)
 
 (*Definisce una funzione per generare la soluzione*)
-GeneraSoluzione[punti_,xmin_,xmax_]:=Module[{grado,polinomio},grado=Length[punti]-1;polinomio=InterpolatingPolynomial[punti,x];polinomio]
+GeneraSoluzione[punti_,xmin_,xmax_]:=Module[{grado,polinomio},
+grado=Length[punti]-1;
+polinomio=InterpolatingPolynomial[punti,x];
+polinomio
+]
 
 (*Definisce una funzione per generare i punti casualmente*)
-GeneraPunti[xmin_,xmax_,ymin_,ymax_,n_]:=Module[{xvalori,yvalori,punti},xvalori=RandomSample[Range[xmin,xmax],n];yvalori=RandomInteger[{ymin,ymax},n];punti=Transpose[{xvalori,yvalori}];polinomio=GeneraSoluzione[punti,xmin,xmax];punti]
+GeneraPunti[xmin_,xmax_,ymin_,ymax_,n_]:=Module[{xvalori,yvalori,punti},
+xvalori=RandomSample[Range[xmin,xmax],n];
+yvalori=RandomInteger[{ymin,ymax},n];
+punti=Transpose[{xvalori,yvalori}];
+polinomio=GeneraSoluzione[punti,xmin,xmax];
+punti
+]
 
 
 
@@ -47,6 +58,7 @@ newpolinomio=polinomio;
 newpunti=punti;
 polinomio;
 myList = {newgrado, newpolinomio, newpunti};
+Print[myList];
 Return[myList];
 ]
 
