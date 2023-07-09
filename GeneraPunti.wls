@@ -19,6 +19,7 @@
 BeginPackage["GeneraPunti`"]
 (* Definizione dell'uso della funzione StrEncode *)
 GeneraPunti::usage = "GeneraPunti[xmin,xmax,ymin,ymax,n] "
+SolGen::usage = "SolGen[punti,xmin,xmax] "
 
 Begin["`Private`"]
 
@@ -39,8 +40,15 @@ GeneraPunti[xmin_,xmax_,ymin_,ymax_,n_]:=Module[{xvalori,yvalori,punti},xvalori=
 
 
 (*Definisce una funzione per generare la soluzione*)
-SolGen[punti_,xmin_,xmax_]:=Module[{grado,polinomio},grado=Length[punti]-1;polinomio=InterpolatingPolynomial[punti,x];newgrado=grado;newpolinomio=polinomio;newpunti=punti;polinomio]
-
+SolGen[punti_,xmin_,xmax_]:=Module[{grado,polinomio},grado=Length[punti]-1;
+polinomio=InterpolatingPolynomial[punti,x];
+newgrado=grado;
+newpolinomio=polinomio;
+newpunti=punti;
+polinomio;
+myList = {newgrado, newpolinomio, newpunti};
+Return[myList];
+]
 
 
 
