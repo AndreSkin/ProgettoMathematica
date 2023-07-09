@@ -31,17 +31,15 @@ stringaEstesa="";  (*Variabile per memorizzare la stringa estesa*)
 repet=0;  (*Variabile per memorizzare il fattore di ripetizione*)
 corruptedStringRip="";  (*Variabile per memorizzare la stringa corrotta*)
 numCharToDelete=0;  (*Variabile per memorizzare il numero di caratteri da eliminare*)
+myList = {"", ""};
 
 (*Variabile per gestire la visualizzazione del risultato*)
 
 (*Definizione della funzione stamp*)
 Stamp[]:=Module[{},Column[
-Print["aoo1"];
 If[StringLength[corruptedStringRip] != 0,
-Print["aoo2"];
-      StringJoin["La stringa estesa \[EGrave]: ", stringaEstesa], ""],
-If[StringLength[corruptedStringRip] != 0,
-      StringJoin["La stringa corrotta \[EGrave]: ", corruptedStringRip], ""]
+	myList = {StringJoin["La stringa estesa \[EGrave]: ", stringaEstesa], StringJoin["La stringa corrotta \[EGrave]: ", corruptedStringRip], "string3"}
+      , ""]
 (*Restituisce un messaggio in base alla risposta data dall'utente*)
 (*Dynamic[err],*)
 ]]
@@ -56,7 +54,8 @@ stringaEstesa=StringJoin[Riffle[StringRepeat[#,fattoreRipetizione]&/@Characters[
 repet=fattoreRipetizione;
 corruptedStringRip=stringaEstesa;
 generateCorruptedString[];
-, Print["Il fattore di ripetizione deve essere maggiore di 0"]]
+, Print["Il fattore di ripetizione deve essere maggiore di 0"]];
+Return[myList];
 ];
 
 (*Definizione della funzione generateCorruptedString*)
@@ -72,8 +71,7 @@ toDelete=RandomSample[Range[1,lunghezzaStringa],numCharToDelete];
 
 (*Crea la stringa corrotta sostituendo i caratteri alle posizioni specificate con "_"*)
 corruptedStringRip=StringReplacePart[stringaEstesa,ConstantArray["_",numCharToDelete],Thread[{toDelete,toDelete}]];
-Print["aoo0"];
-Stamp[]
+Stamp[];
 ];  
 
 
