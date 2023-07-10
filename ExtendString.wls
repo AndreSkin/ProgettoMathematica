@@ -19,10 +19,8 @@
 BeginPackage["ExtendString`"]
 (* Definizione dell'uso della funzione StrEncode *)
 ExtendString::usage = "ExtendString[stringa,fattore] "
-
+PrintErrors::usage="..."
 Begin["`Private`"]
-
-
 
 
 (*Dichiarazione delle variabili*)
@@ -75,16 +73,10 @@ Stamp[];
 ];  
 
 
-  
-
-(*PrintErrors[numErrors_]:= DynamicModule[{}, Dynamic[
-Dynamic[
-If[quizVisible,Column[{"\nQuanti errori sono avvenuti?",InputField[Dynamic[numErrors],Number],
-If[numErrors==numCharToDelete,
-"Corretto!",
-"Sbagliato! Confronta attentamente la stringa estesa e quella contenente gli errori"]
-}]
-]]]*)
+PrintErrors[numErrors_]:=
+If[(numErrors==numCharToDelete),
+Return["Corretto!"],
+Return["Sbagliato! Confronta attentamente la stringa estesa e quella contenente gli errori"]]
 
 
 End[]
