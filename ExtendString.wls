@@ -4,11 +4,11 @@
 (* :Title: ExtendString.wls *)
 (* :Context: ExtendString` *)
 (* :Author: Gruppo 1 *)
-(* :Summary: Funzione per fare bit erasure *)
+(* :Summary: Funzioni per espandere una stringa secondo il fattore di ripetizione dato *)
 (* :Copyright: CC BY-SA*)
 (* :Package Version: 1 *)
 (* :Mathematica Version: 13.3 *)
-(* :History: last modified 8/07/23 *)
+(* :History: last modified 10/07/23 *)
 (* :Keywords: Reed-Solomon, encryption*)
 (* :Sources: V. tutorial.nb*)
 (* :Limitations: this is for educational purposes only. *)
@@ -18,8 +18,14 @@
 
 BeginPackage["ExtendString`"]
 (* Definizione dell'uso della funzione StrEncode *)
-ExtendString::usage = "ExtendString[stringa,fattore] "
-PrintErrors::usage="..."
+ExtendString::usage = "ExtendString[stringa, fattoreRipetizione] prende in input una stringa e un intero che rappresenta il fattore di ripetizione. 
+La funzione estende la stringa ripetendo ogni carattere per il numero di volte specificato dal fattore di ripetizione. 
+Se il fattore di ripetizione \[EGrave] minore di 0, viene visualizzato un messaggio di errore."
+
+PrintErrors::usage = "PrintErrors[numErrors] prende in input un intero che rappresenta il numero di errori. 
+La funzione confronta il numero di errori con il numero di caratteri da eliminare e restituisce 'Corretto!' se i due valori sono uguali, 
+altrimenti restituisce un messaggio di errore'."
+
 Begin["`Private`"]
 
 
@@ -44,7 +50,7 @@ If[StringLength[corruptedStringRip] != 0,
 
 
 (*Definizione della funzione extendString*)
-ExtendString[stringa_,fattoreRipetizione_]:=Module[{str=stringa,rep=fattoreRipetizione},
+ExtendString[stringa_String,fattoreRipetizione_Integer]:=Module[{str=stringa,rep=fattoreRipetizione},
 (*Salva la stringa originale nella variabile originalString*)
 originalString=str;
 If[fattoreRipetizione >=0,
@@ -73,7 +79,7 @@ Stamp[];
 ];  
 
 
-PrintErrors[numErrors_]:=
+PrintErrors[numErrors_Integer]:=
 If[(numErrors==numCharToDelete),
 Return["Corretto!"],
 Return["Sbagliato! Confronta attentamente la stringa estesa e quella contenente gli errori"]]

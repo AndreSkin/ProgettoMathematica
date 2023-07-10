@@ -8,7 +8,7 @@
 (* :Copyright: CC BY-SA*)
 (* :Package Version: 1 *)
 (* :Mathematica Version: 13.3 *)
-(* :History: last modified 8/07/23 *)
+(* :History: last modified 10/07/23 *)
 (* :Keywords: Reed-Solomon, encryption*)
 (* :Sources: V. tutorial.nb*)
 (* :Limitations: this is for educational purposes only. *)
@@ -18,13 +18,16 @@
 
 BeginPackage["Erasure`"]
 (* Definizione dell'uso della funzione StrEncode *)
-CorruptBit::usage = "CorruptBit[stringa] effettua bit flip di un bit casuale della stringa data"
+CorruptBit::usage = "CorruptBit[string] prende in input una stringa e restituisce una versione modificata della stessa.
+La funzione converte la stringa in una sequenza di codici ASCII e successivamente in una rappresentazione binaria. 
+Poi, genera un numero casuale e inverte un bit casuale nella lista modificata. 
+Infine, ricrea una stringa a partire dalla lista di bit modificata e mostra il risultato."
 
 Begin["`Private`"]
 
 
 (*Funzione per stampare il risultato*)
-StampaRisposta[lista_, newlista_, FlippedString_] :=
+StampaRisposta[lista_List, newlista_List, FlippedString_String] :=
   Module[{},
       (* Unisce gli elementi di lista in una stringa separati da virgole *)
       Column[{StringJoin["La rappresentazione binaria di questa stringa \[EGrave]:\n ", StringJoin[ToString /@ Riffle[lista, ", "]]],

@@ -4,11 +4,11 @@
 (* :Title: ExtendString.wls *)
 (* :Context: ExtendString` *)
 (* :Author: Gruppo 1 *)
-(* :Summary: Funzione per fare bit erasure *)
+(* :Summary: Funzioni per generare i punti di un polinomio e il polinomio stesso*)
 (* :Copyright: CC BY-SA*)
 (* :Package Version: 1 *)
 (* :Mathematica Version: 13.3 *)
-(* :History: last modified 8/07/23 *)
+(* :History: last modified 10/07/23 *)
 (* :Keywords: Reed-Solomon, encryption*)
 (* :Sources: V. tutorial.nb*)
 (* :Limitations: this is for educational purposes only. *)
@@ -17,9 +17,16 @@
 
 
 BeginPackage["GeneraPunti`"]
-(* Definizione dell'uso della funzione StrEncode *)
-GeneraPunti::usage = "GeneraPunti[xmin,xmax,ymin,ymax,n] "
-SolGen::usage = "SolGen[punti,xmin,xmax] "
+
+
+GeneraPunti::usage = "GeneraPunti[xmin, xmax, ymin, ymax, n] prende in input cinque interi che rappresentano rispettivamente il valore minimo e massimo dell'asse x, 
+il valore minimo e massimo dell'asse y e il numero di punti da generare. 
+La funzione genera una lista di n punti casuali all'interno del rettangolo definito dai valori xmin, xmax, ymin e ymax e restituisce la lista di punti."
+
+SolGen::usage = "SolGen[punti, xmin, xmax] prende in input una lista di punti e due interi che rappresentano rispettivamente il valore minimo e massimo dell'asse x. 
+La funzione calcola il grado del polinomio interpolante che passa attraverso i punti e restituisce una lista contenente il grado del polinomio,
+il polinomio interpolante e la lista di punti."
+
 x;
 
 Begin["`Private`"]
@@ -33,14 +40,14 @@ polinomio=""; (*Inizializza una stringa vuota per il polinomio*)
 grado=n-1; (*Calcola il grado del polinomio come n-1*)
 
 (*Definisce una funzione per generare la soluzione*)
-GeneraSoluzione[punti_,xmin_,xmax_]:=Module[{grado,polinomio},
+GeneraSoluzione[punti_List,xmin_Integer,xmax_Integer]:=Module[{grado,polinomio},
 grado=Length[punti]-1;
 polinomio=InterpolatingPolynomial[punti,x];
 polinomio
 ]
 
 (*Definisce una funzione per generare i punti casualmente*)
-GeneraPunti[xmin_,xmax_,ymin_,ymax_,n_]:=Module[{xvalori,yvalori,punti},
+GeneraPunti[xmin_Integer,xmax_Integer,ymin_Integer,ymax_Integer,n_Integer]:=Module[{xvalori,yvalori,punti},
 xvalori=RandomSample[Range[xmin,xmax],n];
 yvalori=RandomInteger[{ymin,ymax},n];
 punti=Transpose[{xvalori,yvalori}];
@@ -51,7 +58,7 @@ punti
 
 
 (*Definisce una funzione per generare la soluzione*)
-SolGen[punti_,xmin_,xmax_]:=Module[{grado,polinomio},grado=Length[punti]-1;
+SolGen[punti_List,xmin_Integer,xmax_Integer]:=Module[{grado,polinomio},grado=Length[punti]-1;
 polinomio=InterpolatingPolynomial[punti,x];
 newgrado=grado;
 newpolinomio=polinomio;

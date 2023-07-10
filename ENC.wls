@@ -8,7 +8,7 @@
 (* :Copyright: CC BY-SA*)
 (* :Package Version: 1 *)
 (* :Mathematica Version: 13.2 *)
-(* :History: last modified 16/06/23 *)
+(* :History: last modified 10/07/23 *)
 (* :Keywords: Reed-Solomon, encryption*)
 (* :Sources: V. notebook.nb*)
 (* :Limitations: this is for educational purposes only. *)
@@ -18,7 +18,11 @@
 BeginPackage["ENC`"]
 
 (* Definizione dell'uso della funzione StrEncode *)
-StrEncode::usage = "Encode[x, err] prende in input una stringa x e la espande secondo il numero massimo di errori tollerabili err."
+StrEncode::usage = "StrEncode[inputString, maxErrors] prende in input una stringa e un intero che rappresenta il numero massimo di errori consentiti. 
+La funzione calcola un polinomio interpolante che passa attraverso i punti rappresentati dai valori ASCII dei caratteri della stringa. 
+Se la derivata del polinomio al punto finale \[EGrave] negativa, aggiunge la lettera 'z' alla stringa originale e ricalcola il polinomio interpolante.
+Espande il polinomio aggiungendo punti extra e mostra i risultati in una colonna."
+
 
 (* Definizione dell'uso della variabile ComputedValues *)
 ComputedValues::usage = "ComputedValues \[EGrave] una variabile pubblica che contiene i valori computati da StrEncode."

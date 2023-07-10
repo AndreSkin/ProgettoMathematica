@@ -8,7 +8,7 @@
 (* :Copyright: CC BY-SA*)
 (* :Package Version: 1 *)
 (* :Mathematica Version: 13.3 *)
-(* :History: last modified 8/07/23 *)
+(* :History: last modified 10/07/23 *)
 (* :Keywords: Reed-Solomon, encryption*)
 (* :Sources: V. tutorial.nb*)
 (* :Limitations: this is for educational purposes only. *)
@@ -18,7 +18,9 @@
 
 BeginPackage["BitErasure`"]
 (* Definizione dell'uso della funzione StrEncode *)
-DeleteBit::usage = "DeleteBit[stringa] effettua bit erasure di un bit casuale della stringa data"
+DeleteBit::usage = "DeleteBit[string] prende in input una stringa e restituisce una versione modificata della stessa da cui \[EGrave] stato eliminato un bit.
+La funzione converte la stringa in una sequenza di codici ASCII e successivamente in una rappresentazione binaria.
+Poi, genera un indice casuale e sostituisce l'elemento all'indice casuale con il simbolo '_'."
 
 Begin["`Private`"]
 
@@ -26,7 +28,7 @@ Begin["`Private`"]
 (*UTF-8*)(*Variabile per indicare se mostrare il risultato*)ShowResult=False;
 
 (*Funzione per stampare il risultato*)
-PrintResult[originalList_,modifiedList_]:=Module[{},
+PrintResult[originalList_List,modifiedList_List]:=Module[{},
 	Column[{StringJoin["La rappresentazione binaria di questa stringa \[EGrave]:\n ",
 	(*Unisce gli elementi di originalList in una stringa separati da virgole*)
 	StringJoin[ToString/@Riffle[originalList,", "]]],
@@ -37,7 +39,7 @@ PrintResult[originalList_,modifiedList_]:=Module[{},
 	(*Se ShowResult \[EGrave] falso,non viene mostrato alcun risultato*)]
 
 (*Funzione per eliminare un bit*)
-DeleteBit[string_]:=Module[{str=string, bitString, originalList, modifiedList, length, randomIndex},
+DeleteBit[string_String]:=Module[{str=string, bitString, originalList, modifiedList, length, randomIndex},
 	(*Controlla se la stringa non \[EGrave] vuota*)
 	If[StringLength[str]>0,
 	(*Converte la stringa in una sequenza di codici ASCII e successivamente in una rappresentazione binaria*)

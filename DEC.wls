@@ -8,7 +8,7 @@
 (* :Copyright: CC BY-SA*)
 (* :Package Version: 1 *)
 (* :Mathematica Version: 13.2 *)
-(* :History: last modified 17/06/23 *)
+(* :History: last modified 10/07/23 *)
 (* :Keywords: Reed-Solomon, decryption*)
 (* :Sources: V. notebook.nb*)
 (* :Limitations: this is for educational purposes only. *)
@@ -17,8 +17,12 @@
 
 BeginPackage["DEC`"]
 
-MsgDecode::usage = "Decode[x] prende in input un messaggio x generato da ENC.wls e lo decodifica."
-(*toReturn::usage ="abcd"*)
+MsgDecode::usage = "MsgDecode[input] prende in input una lista contenente una stringa corrotta, 
+una lista di posizioni degli errori, la lunghezza della stringa originale e il numero massimo di errori consentiti. 
+La funzione ricostruisce il polinomio interpolante utilizzando i caratteri non corrotti e lo utilizza per ricostruire la stringa originale. 
+Restituisce una lista contenente la stringa ricostruita e il grafico del polinomio ricostruito."
+
+
 Begin["Private`"]
 
 MsgDecode[input_List] := Module[{i},
