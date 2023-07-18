@@ -22,17 +22,26 @@ una lista di posizioni degli errori, la lunghezza della stringa originale e il n
 La funzione ricostruisce il polinomio interpolante utilizzando i caratteri non corrotti e lo utilizza per ricostruire la stringa originale. 
 Restituisce una lista contenente la stringa ricostruita e il grafico del polinomio ricostruito."
 
-DecodeInterfaccia::usage="..."
+DecodeInterfaccia::usage="Funzione che crea un\[CloseCurlyQuote]interfaccia utente per chiamare la funzione MsgDecode. 
+L\[CloseCurlyQuote]interfaccia consiste in un bottone per decodificare la stringa e due elementi dinamici per mostrare il messaggio di errore 
+o la stringa decodificata e i grafici restituiti dalla funzione MsgDecode. 
+La funzione accetta come input una lista di valori calcolati da MsgEncode e utilizza le variabili locali al modulo per gestire lo stato dell\[CloseCurlyQuote]interfaccia."
 
 
 Begin["Private`"]
 
+(* Inizializza le variabili locali al modulo *)
 DecodeInterfaccia[ComputedValues_] := DynamicModule[{output = "", decodedString = "", grafici = {}, err = ""},
+  (* Crea una colonna di elementi dell'interfaccia *)
   Column[{
+    (* Crea un bottone per decodificare la stringa *)
     Button["Decodifica stringa",
+      (* Verifica se l'input \[EGrave] valido *)
       If[Not[ListQ[ComputedValues]],
+        (* Se l'input non \[EGrave] valido, mostra un messaggio di errore *)
         err = "Corrompi una stringa nella casella di input precedente prima di provare a decodificare";
         ,
+        (* Se l'input \[EGrave] valido, chiama la funzione MsgDecode e mostra l'output *)
         err = "";
         output = MsgDecode[ComputedValues];
         decodedString = "La stringa decodificata \[EGrave]: " <> output[[1]];
@@ -40,14 +49,13 @@ DecodeInterfaccia[ComputedValues_] := DynamicModule[{output = "", decodedString 
       ],
       BaseStyle -> {FontSize -> 24}, ImageSize -> {400, 100}
     ],
+    (* Mostra il messaggio di errore o la stringa decodificata *)
     Dynamic[err],
     Dynamic[decodedString],
+    (* Mostra i grafici restituiti dalla funzione MsgDecode *)
     Dynamic[If[grafici === {}, "", grafici]]
   }]
 ]
-
-
-
 
 
 
