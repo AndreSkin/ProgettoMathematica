@@ -22,11 +22,37 @@ una lista di posizioni degli errori, la lunghezza della stringa originale e il n
 La funzione ricostruisce il polinomio interpolante utilizzando i caratteri non corrotti e lo utilizza per ricostruire la stringa originale. 
 Restituisce una lista contenente la stringa ricostruita e il grafico del polinomio ricostruito."
 
+DecodeInterfaccia::usage="..."
+
 
 Begin["Private`"]
 
+DecodeInterfaccia[ComputedValues_] := DynamicModule[{output = "", decodedString = "", grafici = {}, err = ""},
+  Column[{
+    Button["Decodifica stringa",
+      If[Not[ListQ[ComputedValues]],
+        err = "Corrompi una stringa nella casella di input precedente prima di provare a decodificare";
+        ,
+        err = "";
+        output = MsgDecode[ComputedValues];
+        decodedString = "La stringa decodificata \[EGrave]: " <> output[[1]];
+        grafici = output[[2]];
+      ],
+      BaseStyle -> {FontSize -> 24}, ImageSize -> {400, 100}
+    ],
+    Dynamic[err],
+    Dynamic[decodedString],
+    Dynamic[If[grafici === {}, "", grafici]]
+  }]
+]
+
+
+
+
+
+
 MsgDecode[input_List] := 
-Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, charsPos,points,labeledPoints, labeledPointsList, reconstructedPoly,recStr,grafici, toReturn},
+Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, charsPos,points,labeledPoints, labeledPointsList, reconstructedPoly,recStr,grafici, toReturn},    
     (* Estrae i valori dalla lista di input *)
     corruptedString = input[[1]];
     errorsPos = input[[2]];
