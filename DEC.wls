@@ -25,7 +25,8 @@ Restituisce una lista contenente la stringa ricostruita e il grafico del polinom
 
 Begin["Private`"]
 
-MsgDecode[input_List] := Module[{i},
+MsgDecode[input_List] := 
+Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, charsPos,points,labeledPoints, labeledPointsList, reconstructedPoly,recStr,grafici, toReturn},
     (* Estrae i valori dalla lista di input *)
     corruptedString = input[[1]];
     errorsPos = input[[2]];
@@ -63,7 +64,7 @@ MsgDecode[input_List] := Module[{i},
 (* Definizione della funzione PlotReconstructedPoly *)
   PlotReconstructedPoly[reconstructedPoly_, labeledPointsList_List, strLen_Integer] :=
   Return[
-  Module[{i},
+  Module[{},
     (* Mostra un grafico dei punti e del polinomio ricostruito *)
     Grid[{
       {ListPlot[labeledPointsList, PlotStyle -> {PointSize[Large], Blue},
@@ -82,7 +83,7 @@ MsgDecode[input_List] := Module[{i},
 
 (* Definizione della funzione ReconstructString *)
 ReconstructString[reconstructedPoly_, strLen_Integer, maxErrors_Integer] :=
-Module[{i},
+Module[{reconstructedPoints,reconstructedAsciiList,reconstructedString  },
 (* Calcola i punti ricostruiti *)
 reconstructedPoints = Table[{i, reconstructedPoly /. x -> i}, {i, strLen - maxErrors}];
 (* Ottiene la lista di valori ASCII dai punti ricostruiti *)

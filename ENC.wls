@@ -31,7 +31,7 @@ Begin["Private`"]
 
 (* Definizione della funzione StrEncode *)
 StrEncode[inputString_String, maxErrors_Integer] :=
-DynamicModule[{i},
+DynamicModule[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, fDevSign, labeledPoints, labeledPointsList},
     (* Converte la stringa in una lista di caratteri ASCII *)
     asciiList = ToCharacterCode[inputString];
     
@@ -94,7 +94,7 @@ DynamicModule[{i},
 
 (* Definizione della funzione PlotString *)
 PlotString[polynomial_, asciiList_List, charlist_List, points_List] :=
-Module[{i},
+Module[{i, labeledPoints, labeledPointsList},
     (* Costruisce una lista di punti con etichette per il grafico *)
     labeledPoints = Transpose[{points, charlist}];
     labeledPointsList = Labeled[#[[1]], #[[2]], Above] & /@ labeledPoints;
@@ -112,7 +112,7 @@ Module[{i},
 
 (* Definizione della funzione PlotPoly *)
 PlotPoly[polynomial_, asciiList_List, points_List, labeledPointsList_List] :=
-Module[{i},
+Module[{},
     (* Mostra il polinomio e i punti su un grafico *)
     Show[
         Plot[polynomial, {x, 1, Length[asciiList]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large, BaseStyle -> {FontSize -> 24}],
@@ -125,7 +125,7 @@ Module[{i},
 
 (* Definizione della funzione ExpandString *)
 ExpandString[polynomial_, expandedPoints_List] :=
-Module[{i},
+Module[{asciiListExpanded, stringExpanded, charListExpanded, labeledPointsExpanded, labeledPointsExpandedList},
     (* Ottiene la lista dei valori ASCII dagli expandedPoints *)
     asciiListExpanded = Round[Last /@ expandedPoints];
     
@@ -151,7 +151,7 @@ Module[{i},
 
 (* Definizione della funzione StringCorruption *)
 StringCorruption[expandedPoints_List, maxErrors_Integer] :=
-Module[{i},
+Module[{asciiListExpanded, stringExpanded, nErrors, errorsPos,myStringAsList,corruptedString,StrLen},
     (* Ottiene la lista dei valori ASCII dagli expandedPoints *)
     asciiListExpanded = Round[Last /@ expandedPoints];
     
@@ -182,8 +182,6 @@ Module[{i},
     Column[{
     StringJoin["Stringa corrotta: ", corruptedString],
     StringJoin["Lunghezza della stringa espansa: ", ToString[StrLen]]}]
-    (* Stampa i valori calcolati *)
-    (*Print[ComputedValues]*)
 ]
 
 
