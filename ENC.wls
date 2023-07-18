@@ -23,11 +23,38 @@ La funzione calcola un polinomio interpolante che passa attraverso i punti rappr
 Se la derivata del polinomio al punto finale \[EGrave] negativa, aggiunge la lettera 'z' alla stringa originale e ricalcola il polinomio interpolante.
 Espande il polinomio aggiungendo punti extra e mostra i risultati in una colonna."
 
-
 (* Definizione dell'uso della variabile ComputedValues *)
 ComputedValues::usage = "ComputedValues \[EGrave] una variabile pubblica che contiene i valori computati da StrEncode."
 
+CreaInterfaccia::usage="Crea un\[CloseCurlyQuote]interfaccia utente per chiamare la funzione StrEncode con gli argomenti specificati dall\[CloseCurlyQuote]utente. 
+L\[CloseCurlyQuote]interfaccia consiste in un campo di input per l\[CloseCurlyQuote]input dell\[CloseCurlyQuote]utente, uno slider per selezionare il valore massimo degli errori 
+e un bottone per chiamare la funzione StrEncode e mostrare l\[CloseCurlyQuote]output."
+
+
 Begin["Private`"]
+
+(* Inizializza le variabili locali al modulo *)
+CreaInterfaccia[] := DynamicModule[{UpperBound = 12, baseInput = "ciao", output = "", maxErrors = 1},
+  (* Crea una colonna di elementi dell'interfaccia *)
+  Column[{
+    (* Crea una riga con un'etichetta e un campo di input per l'input dell'utente *)
+    Row[{"Stringa di Input: ", InputField[Dynamic[baseInput], String, BaseStyle -> {FontSize -> 24}, ImageSize -> {200, 50}]}],
+    (* Crea una riga con un'etichetta, uno slider e un elemento dinamico per mostrare il valore corrente dello slider *)
+    Row[{"Massimo Errori: ", Slider[Dynamic[maxErrors], {1, Dynamic[Max[1, UpperBound - StringLength[baseInput]]], 1}], Dynamic[maxErrors]}],
+    (* Crea un elemento dinamico per mostrare l'output della funzione StrEncode *)
+    Dynamic[output],
+    (* Crea un bottone che chiama la funzione StrEncode quando viene premuto e mostra l'output *)
+    Button["Espandi e corrompi stringa",
+      If[StringLength[StringTrim[baseInput]] < 2,
+        output = "Per favore inserisci contenente almeno due caratteri",
+        output = StrEncode[StringTake[baseInput, Min[StringLength[baseInput], UpperBound]], maxErrors];
+        maxErrors = 1
+      ],
+      BaseStyle -> {FontSize -> 24}, ImageSize -> {400, 100}
+    ]
+  }]
+]
+
 
 (* Definizione della funzione StrEncode *)
 StrEncode[inputString_String, maxErrors_Integer] :=
