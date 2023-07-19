@@ -40,14 +40,14 @@ CreaInterfaccia[] := DynamicModule[{UpperBound = 12, baseInput = "ciao", output 
     (* Crea una riga con un'etichetta e un campo di input per l'input dell'utente *)
     Row[{"Stringa di Input: ", InputField[Dynamic[baseInput], String, BaseStyle -> {FontSize -> 24}, ImageSize -> {200, 50}]}],
     (* Crea una riga con un'etichetta, uno slider e un elemento dinamico per mostrare il valore corrente dello slider *)
-    Row[{"Massimo Errori: ", Slider[Dynamic[maxErrors], {1, Dynamic[Max[1, UpperBound - StringLength[baseInput]]], 1}], Dynamic[maxErrors]}],
+    Row[{"Massimo Errori: ", Slider[Dynamic[maxErrors], {1, Dynamic[Max[1, UpperBound - StringLength[StringTrim[baseInput]]]], 1}], Dynamic[maxErrors]}],
     (* Crea un elemento dinamico per mostrare l'output della funzione StrEncode *)
     Dynamic[output],
     (* Crea un bottone che chiama la funzione StrEncode quando viene premuto e mostra l'output *)
     Button["Espandi e corrompi stringa",
       If[StringLength[StringTrim[baseInput]] < 2,
         output = "Per favore inserisci contenente almeno due caratteri",
-        output = StrEncode[StringTake[baseInput, Min[StringLength[baseInput], UpperBound]], maxErrors];
+        output = StrEncode[StringTake[StringTrim[baseInput], Min[StringLength[StringTrim[baseInput]], UpperBound]], maxErrors];
         maxErrors = 1
       ],
       BaseStyle -> {FontSize -> 24}, ImageSize -> {400, 100}
@@ -60,7 +60,7 @@ CreaInterfaccia[] := DynamicModule[{UpperBound = 12, baseInput = "ciao", output 
 StrEncode[inputString_String, maxErrors_Integer] :=
 DynamicModule[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, fDevSign, labeledPoints, labeledPointsList},
     (* Converte la stringa in una lista di caratteri ASCII *)
-    asciiList = ToCharacterCode[inputString];
+    asciiList = ToCharacterCode[StringTrim[inputString]];
     
     (* Costruisce una lista di punti usando gli indici dei caratteri ASCII e i loro valori ASCII *)
     points = Transpose[{Range[Length[asciiList]], asciiList}];
