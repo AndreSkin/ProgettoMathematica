@@ -116,8 +116,9 @@ DynamicModule[{i, asciiList, points, polynomial, expandedPoints, charList, str, 
     (* Mostra i risultati in una colonna *)
     Column[
         {
+        Row[{
             PlotString[polynomial, asciiList, charList, points],
-            ExpandString[polynomial, expandedPoints],
+            ExpandString[polynomial, expandedPoints]}],
             StringCorruption[expandedPoints, maxErrors]
         }
     ]
@@ -134,7 +135,7 @@ Module[{i, labeledPoints, labeledPointsList},
     labeledPointsList = Labeled[#[[1]], #[[2]], Above] & /@ labeledPoints;
     
     (* Mostra un grafico dei punti con le etichette *)
-    Column[
+    Row[
         {
             ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large, BaseStyle -> {FontSize -> 24}],
             PlotPoly[polynomial, asciiList, points, labeledPointsList]
