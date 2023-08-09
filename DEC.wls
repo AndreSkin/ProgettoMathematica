@@ -8,7 +8,7 @@
 (* :Copyright: CC BY-SA*)
 (* :Package Version: 1 *)
 (* :Mathematica Version: 13.2 *)
-(* :History: last modified 10/07/23 *)
+(* :History: last modified 09/08/23 *)
 (* :Keywords: Reed-Solomon, decryption*)
 (* :Sources: V. notebook.nb*)
 (* :Limitations: this is for educational purposes only. *)
@@ -17,10 +17,10 @@
 
 BeginPackage["DEC`"]
 
-MsgDecode::usage = "MsgDecode[input] prende in input una lista contenente una stringa corrotta, 
+(*MsgDecode::usage = "MsgDecode[input] prende in input una lista contenente una stringa corrotta, 
 una lista di posizioni degli errori, la lunghezza della stringa originale e il numero massimo di errori consentiti. 
 La funzione ricostruisce il polinomio interpolante utilizzando i caratteri non corrotti e lo utilizza per ricostruire la stringa originale. 
-Restituisce una lista contenente la stringa ricostruita e il grafico del polinomio ricostruito."
+Restituisce una lista contenente la stringa ricostruita e il grafico del polinomio ricostruito."*)
 
 DecodeInterfaccia::usage="Funzione che crea un\[CloseCurlyQuote]interfaccia utente per chiamare la funzione MsgDecode. 
 L\[CloseCurlyQuote]interfaccia consiste in un bottone per decodificare la stringa e due elementi dinamici per mostrare il messaggio di errore 
@@ -96,22 +96,25 @@ Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, char
 
 
 (* Definizione della funzione PlotReconstructedPoly *)
-  PlotReconstructedPoly[reconstructedPoly_, labeledPointsList_List, strLen_Integer] :=
-  Return[
-  Module[{},
+PlotReconstructedPoly[reconstructedPoly_, labeledPointsList_List, strLen_Integer] :=
+Return[
+Module[{},
     (* Mostra un grafico dei punti e del polinomio ricostruito *)
-    Grid[{
-      {ListPlot[labeledPointsList, PlotStyle -> {PointSize[Large], Blue},
+    Row[{
+      ListPlot[labeledPointsList, PlotStyle -> {PointSize[Large], Blue},
         AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {600, 400}, 
-        LabelStyle -> {FontSize -> 18}], SpanFromLeft},
-      {Show[Plot[reconstructedPoly, {x, 1, strLen}, PlotStyle -> Red,
+        LabelStyle -> {FontSize -> 18}],
+        
+      Show[Plot[reconstructedPoly, {x, 1, strLen}, PlotStyle -> Red,
           AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {600, 400}, 
           LabelStyle -> {FontSize -> 18}],
+          
         ListPlot[labeledPointsList, PlotStyle -> {PointSize[Large], Blue},
           AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {600, 400}, 
-          LabelStyle -> {FontSize -> 18}]], SpanFromLeft}
-    }, Spacings -> {5, 5}]
-  ]]
+          LabelStyle -> {FontSize -> 18}]]
+    }]
+]]
+
 
 
 
@@ -127,9 +130,6 @@ reconstructedAsciiList = Round[Last /@ reconstructedPoints];
 reconstructedString = FromCharacterCode[reconstructedAsciiList];
 
 Return[reconstructedString];
-
-(* Stampa la stringa ricostruita*)
-(*Print["La stringa ricostruita \[EGrave]: " <> ToString[reconstructedString]];*)
 ]
 
 
