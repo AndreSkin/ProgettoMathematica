@@ -8,7 +8,7 @@
 (* :Copyright: CC BY-SA*)
 (* :Package Version: 1 *)
 (* :Mathematica Version: 13.2 *)
-(* :History: last modified 10/07/23 *)
+(* :History: last modified 09/08/23 *)
 (* :Keywords: Reed-Solomon, encryption*)
 (* :Sources: V. notebook.nb*)
 (* :Limitations: this is for educational purposes only. *)
@@ -34,10 +34,15 @@ e un bottone per chiamare la funzione StrEncode e mostrare l\[CloseCurlyQuote]ou
 Begin["Private`"]
 
 (* Inizializza le variabili locali al modulo *)
-CreaInterfaccia[] := DynamicModule[{UpperBound = 12, baseInput = "ciao", output = "", maxErrors = 1},
+CreaInterfaccia[] := DynamicModule[{UpperBound = 12, baseInput = "ciao", output = "", maxErrors = 1, randomSeed = 1, seedMessage = ""},
   (* Crea una colonna di elementi dell'interfaccia *)
   Column[{
-    (* Crea una riga con un'etichetta e un campo di input per l'input dell'utente *)
+    (* Crea una riga con un'etichetta e un campo di input per l'input dell'utente per impostare il RandomSeed *)
+    Row[{"Random Seed: ", InputField[Dynamic[randomSeed], Number, BaseStyle -> {FontSize -> 24}, ImageSize -> {200, 50}], 
+    Button["Imposta Seed", SeedRandom[If[NumericQ[randomSeed], randomSeed, 1]]; 
+    seedMessage = If[NumericQ[randomSeed], StringJoin["Seed impostato a ", ToString[randomSeed]], "Seed assente: il seed di default \[EGrave] 1"], BaseStyle -> {FontSize -> 24}, ImageSize -> {200, 50}]}],
+    Dynamic[seedMessage],
+    
     Row[{"Stringa di Input: ", InputField[Dynamic[baseInput], String, BaseStyle -> {FontSize -> 24}, ImageSize -> {200, 50}]}],
     (* Crea una riga con un'etichetta, uno slider e un elemento dinamico per mostrare il valore corrente dello slider *)
     Row[{"Massimo Errori: ", Slider[Dynamic[maxErrors], {1, Dynamic[Max[1, UpperBound - StringLength[StringTrim[baseInput]]]], 1}], Dynamic[maxErrors]}],
@@ -56,11 +61,13 @@ CreaInterfaccia[] := DynamicModule[{UpperBound = 12, baseInput = "ciao", output 
 ]
 
 
+
+
 (* Definizione della funzione StrEncode *)
 StrEncode[inputString_String, maxErrors_Integer] :=
 DynamicModule[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, fDevSign, labeledPoints, labeledPointsList},
     (* Converte la stringa in una lista di caratteri ASCII *)
-    asciiList = ToCharacterCode[StringTrim[inputString]];
+    asciiList = ToCharacterCode[inputString];
     
     (* Costruisce una lista di punti usando gli indici dei caratteri ASCII e i loro valori ASCII *)
     points = Transpose[{Range[Length[asciiList]], asciiList}];
