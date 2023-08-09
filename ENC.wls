@@ -18,10 +18,10 @@
 BeginPackage["ENC`"]
 
 (* Definizione dell'uso della funzione StrEncode *)
-StrEncode::usage = "StrEncode[inputString, maxErrors] prende in input una stringa e un intero che rappresenta il numero massimo di errori consentiti. 
+(*StrEncode::usage = "StrEncode[inputString, maxErrors] prende in input una stringa e un intero che rappresenta il numero massimo di errori consentiti. 
 La funzione calcola un polinomio interpolante che passa attraverso i punti rappresentati dai valori ASCII dei caratteri della stringa. 
 Se la derivata del polinomio al punto finale \[EGrave] negativa, aggiunge la lettera 'z' alla stringa originale e ricalcola il polinomio interpolante.
-Espande il polinomio aggiungendo punti extra e mostra i risultati in una colonna."
+Espande il polinomio aggiungendo punti extra e mostra i risultati in una colonna."*)
 
 (* Definizione dell'uso della variabile ComputedValues *)
 ComputedValues::usage = "ComputedValues \[EGrave] una variabile pubblica che contiene i valori computati da StrEncode."
@@ -65,7 +65,7 @@ CreaInterfaccia[] := DynamicModule[{UpperBound = 12, baseInput = "ciao", output 
 
 (* Definizione della funzione StrEncode *)
 StrEncode[inputString_String, maxErrors_Integer] :=
-DynamicModule[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, fDevSign, labeledPoints, labeledPointsList},
+Module[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, fDevSign, labeledPoints, labeledPointsList},
     (* Converte la stringa in una lista di caratteri ASCII *)
     asciiList = ToCharacterCode[inputString];
     
