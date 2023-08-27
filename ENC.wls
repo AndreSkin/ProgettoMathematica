@@ -65,7 +65,7 @@ CreaInterfaccia[] := DynamicModule[{UpperBound = 12, baseInput = "ciao", output 
 
 (* Definizione della funzione StrEncode *)
 StrEncode[inputString_String, maxErrors_Integer] :=
-Module[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, fDevSign, labeledPoints, labeledPointsList},
+Module[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, fDevSign, labeledPoints, labeledPointsList, isCharacterAdded},
     (* Converte la stringa in una lista di caratteri ASCII *)
     asciiList = ToCharacterCode[inputString];
     
@@ -91,6 +91,7 @@ Module[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, f
     
     (* Verifica se la derivata \[EGrave] negativa *)
     If[fDevSign < 0,
+        isCharacterAdded = True;
         (* Aggiunge la lettera 'z' alla stringa originale *)
         str = inputString <> "\[AGrave]";
         
@@ -122,7 +123,7 @@ Module[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, f
             PlotString[polynomial, asciiList, charList, points],
             ExpandString[polynomial, expandedPoints]
             }],
-            StringCorruption[expandedPoints, maxErrors]
+            StringCorruption[expandedPoints, maxErrors, isCharacterAdded]
         }
     ]
 ]
@@ -188,7 +189,7 @@ Module[{asciiListExpanded, stringExpanded, charListExpanded, labeledPointsExpand
 
 
 (* Definizione della funzione StringCorruption *)
-StringCorruption[expandedPoints_List, maxErrors_Integer] :=
+StringCorruption[expandedPoints_List, maxErrors_Integer,isCharacterAdded_] :=
 Module[{asciiListExpanded, stringExpanded, nErrors, errorsPos,myStringAsList,corruptedString,StrLen},
     (* Ottiene la lista dei valori ASCII dagli expandedPoints *)
     asciiListExpanded = Round[Last /@ expandedPoints];
@@ -215,8 +216,8 @@ Module[{asciiListExpanded, stringExpanded, nErrors, errorsPos,myStringAsList,cor
     StrLen = StringLength[stringExpanded];
     
     (* Memorizza i valori calcolati nella variabile ComputedValues *)
-    ComputedValues = {corruptedString, errorsPos, StrLen, maxErrors};
-    
+    ComputedValues = {corruptedString, errorsPos, StrLen, maxErrors, isCharacterAdded};
+  
     Column[{
     StringJoin["Stringa corrotta: ", corruptedString],
     StringJoin["Lunghezza della stringa espansa: ", ToString[StrLen]]}]

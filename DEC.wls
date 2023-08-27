@@ -44,7 +44,8 @@ DecodeInterfaccia[ComputedValues_] := DynamicModule[{output = "", decodedString 
         (* Se l'input \[EGrave] valido, chiama la funzione MsgDecode e mostra l'output *)
         err = "";
         output = MsgDecode[ComputedValues];
-        decodedString = "La stringa decodificata \[EGrave]: " <> output[[1]];
+        If[output[[3]] == True, decodedString = "La stringa decodificata \[EGrave]: " <> StringDrop[output[[1]],-1],
+        decodedString = "La stringa decodificata \[EGrave]: " <> output[[1]]];
         grafici = output[[2]];
       ],
       BaseStyle -> {FontSize -> 24}, ImageSize -> {400, 100}
@@ -66,7 +67,7 @@ Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, char
     errorsPos = input[[2]];
     strLen = input[[3]];
     maxErrors = input[[4]];
-
+	isCharacterAdded = input[[5]];
     (* Converte la stringa corrotta in una lista di valori ASCII *)
     asciiList = ToCharacterCode[corruptedString];
 
@@ -90,7 +91,7 @@ Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, char
     (* Richiama la funzione per visualizzare il polinomio ricostruito *)
     grafici = PlotReconstructedPoly[reconstructedPoly, labeledPointsList, strLen];
     
-    toReturn = {recStr, grafici};
+    toReturn = {recStr, grafici, isCharacterAdded};
     Return[toReturn];
 ]
 
