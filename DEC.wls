@@ -61,7 +61,7 @@ DecodeInterfaccia[ComputedValues_] := DynamicModule[{output = "", decodedString 
 
 
 MsgDecode[input_List] := 
-Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, charsPos,points,labeledPoints, labeledPointsList, reconstructedPoly,recStr,grafici, toReturn},    
+Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, charsPos,points,labeledPoints, labeledPointsList, reconstructedPoly,recStr,grafici, toReturn, isCharacterAdded},    
     (* Estrae i valori dalla lista di input *)
     corruptedString = input[[1]];
     errorsPos = input[[2]];
@@ -77,10 +77,14 @@ Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, char
     (* Calcola la posizione dei caratteri non corrotti *)
     charsPos = Complement[Range[strLen], errorsPos];
 
+	If[isCharacterAdded, Print[charList]; charList[[Last[Position[charList, "\[AGrave]"]]]] = " "];
+
     (* Costruisce una lista di punti con etichette per il grafico *)
-    points = Transpose[{charsPos, asciiList}];
+    points = Transpose[{charsPos, asciiList}]; 
     labeledPoints = Transpose[{points, charList}];
     labeledPointsList = Labeled[#[[1]], #[[2]], Above] & /@ labeledPoints;
+
+	
 
     (* Ricostruisce il polinomio interpolante *)
     reconstructedPoly = Expand[InterpolatingPolynomial[points, x]];
