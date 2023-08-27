@@ -84,14 +84,15 @@ Module[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, f
     (* Memorizza la stringa originale *)
     str = inputString;
     
+    len = Length[asciiList];
     (* Calcola la derivata del polinomio al punto finale *)
     fDev = D[polynomial, x];
-    fDevSign = Sign[fDev /. x -> asciiList[[-1]]];
+    fDevSign = fDev /. x -> len;
     
     (* Verifica se la derivata \[EGrave] negativa *)
     If[fDevSign < 0,
         (* Aggiunge la lettera 'z' alla stringa originale *)
-        str = inputString <> "z";
+        str = inputString <> "\[AGrave]";
         
         (* Converte la nuova stringa in una lista di caratteri ASCII *)
         asciiList = ToCharacterCode[str];
@@ -117,8 +118,10 @@ Module[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, f
     Column[
         {
         Row[{
+        (*PlotString[fDev, asciiList, charList, points],*)
             PlotString[polynomial, asciiList, charList, points],
-            ExpandString[polynomial, expandedPoints]}],
+            ExpandString[polynomial, expandedPoints]
+            }],
             StringCorruption[expandedPoints, maxErrors]
         }
     ]
@@ -137,7 +140,7 @@ Module[{i, labeledPoints, labeledPointsList},
     (* Mostra un grafico dei punti con le etichette *)
     Row[
         {
-            ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large, BaseStyle -> {FontSize -> 24}],
+            ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large, BaseStyle -> {FontSize -> 24}, Ticks -> {Range[0, 10, 1], Automatic}],
             PlotPoly[polynomial, asciiList, points, labeledPointsList]
         }
     ]
@@ -150,8 +153,8 @@ PlotPoly[polynomial_, asciiList_List, points_List, labeledPointsList_List] :=
 Module[{},
     (* Mostra il polinomio e i punti su un grafico *)
     Show[
-        Plot[polynomial, {x, 1, Length[asciiList]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large, BaseStyle -> {FontSize -> 24}],
-        ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue}]
+        Plot[polynomial, {x, 1, Length[asciiList]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large, BaseStyle -> {FontSize -> 24},Ticks -> {Range[0, 10, 1], Automatic}],
+        ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue},Ticks -> {Range[0, 10, 1], Automatic}]
     ]
 ]
 
