@@ -77,7 +77,7 @@ Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, char
     (* Calcola la posizione dei caratteri non corrotti *)
     charsPos = Complement[Range[strLen], errorsPos];
 
-	If[isCharacterAdded, Print[charList]; charList[[Last[Position[charList, "\[AGrave]"]]]] = " "];
+	If[isCharacterAdded, charList[[Last[Position[charList, "\[AGrave]"]]]] = " "];
 
     (* Costruisce una lista di punti con etichette per il grafico *)
     points = Transpose[{charsPos, asciiList}]; 
