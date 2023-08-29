@@ -131,7 +131,7 @@ Module[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, f
 
 
 
-(* Definizione della funzione PlotString *)
+(* Definizione della funzione PlotString (primo grafico di ENC) *)
 PlotString[polynomial_, asciiList_List, charlist_List, points_List] :=
 Module[{i, labeledPoints, labeledPointsList},
     (* Costruisce una lista di punti con etichette per il grafico *)
@@ -149,20 +149,20 @@ Module[{i, labeledPoints, labeledPointsList},
 
 
 
-(* Definizione della funzione PlotPoly *)
+(* Definizione della funzione PlotPoly (secondo grafico di ENC)*)
 PlotPoly[polynomial_, asciiList_List, points_List, labeledPointsList_List] :=
 Module[{},
     (* Mostra il polinomio e i punti su un grafico *)
     Show[
-        Plot[polynomial, {x, 1, Length[asciiList]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large, BaseStyle -> {FontSize -> 24},Ticks -> {Range[0, 10, 1], Automatic}],
-        ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue},Ticks -> {Range[0, 10, 1], Automatic}]
+        Plot[polynomial, {x, 1, Length[asciiList]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large, BaseStyle -> {FontSize -> 24},Ticks -> {Range[0, Length[asciiList], 1], Automatic}],
+        ListPlot[labeledPointsList, PlotStyle -> {PointSize[Medium], Blue},Ticks -> {Range[0, Length[labeledPointsList], 1], Automatic}]
     ]
 ]
 
 
 
 
-(* Definizione della funzione ExpandString *)
+(* Definizione della funzione ExpandString (terzo grafico di ENC) *)
 ExpandString[polynomial_, expandedPoints_List] :=
 Module[{asciiListExpanded, stringExpanded, charListExpanded, labeledPointsExpanded, labeledPointsExpandedList},
     (* Ottiene la lista dei valori ASCII dagli expandedPoints *)
@@ -180,7 +180,7 @@ Module[{asciiListExpanded, stringExpanded, charListExpanded, labeledPointsExpand
     
     (* Mostra il polinomio espanso e i punti su un grafico *)
     Show[
-        Plot[polynomial, {x, 1, Length[expandedPoints]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"}, ImageSize -> Large, BaseStyle -> {FontSize -> 24}],
+        Plot[polynomial, {x, 1, Length[expandedPoints]}, PlotStyle -> Red, AxesLabel -> {"x", "ASCII Value"},PlotRange -> {{0, Length[expandedPoints] + 1}, {Min[expandedPoints[[All,2]]], Max[expandedPoints[[All,2]]] + Floor[Max[expandedPoints[[All,2]]]/3]}}, ImageSize -> Large, BaseStyle -> {FontSize -> 24}],
         ListPlot[labeledPointsExpandedList, PlotStyle -> {PointSize[Medium], Blue}]
     ]
 ]
