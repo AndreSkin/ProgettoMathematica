@@ -61,7 +61,7 @@ DecodeInterfaccia[ComputedValues_] := DynamicModule[{output = "", decodedString 
 
 
 MsgDecode[input_List] := 
-Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, charsPos,points,labeledPoints, labeledPointsList, reconstructedPoly,recStr,grafici, toReturn, isCharacterAdded},    
+Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, charsPos,points,labeledPoints, labeledPointsList, reconstructedPoly,recStr,grafici, toReturn, isCharacterAdded, ReconstructStringResult, reconstructedPointsList, labeledReconstructedPoints, charReconstructedList, labeledReconstructedPointsList},    
     (* Estrae i valori dalla lista di input *)
     corruptedString = input[[1]];
     errorsPos = input[[2]];
@@ -83,17 +83,24 @@ Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, char
     points = Transpose[{charsPos, asciiList}]; 
     labeledPoints = Transpose[{points, charList}];
     labeledPointsList = Labeled[#[[1]], #[[2]], Above] & /@ labeledPoints;
-
 	
-
     (* Ricostruisce il polinomio interpolante *)
     reconstructedPoly = Expand[InterpolatingPolynomial[points, x]];
 
     (* Richiama la funzione per ricostruire la stringa originale *)
-    recStr = ReconstructString[reconstructedPoly, strLen, maxErrors];
-
+    ReconstructStringResult = ReconstructString[reconstructedPoly, strLen, maxErrors];
+    
+    recStr = ReconstructStringResult[[1]];
+    
+    reconstructedPointsList = ReconstructStringResult[[2]];
+    
+    charReconstructedList = Characters[recStr]; 
+    
+    labeledReconstructedPoints = Transpose[{reconstructedPointsList, charReconstructedList}];
+    labeledReconstructedPointsList = Labeled[#[[1]], #[[2]], Above] & /@ labeledReconstructedPoints;
+    
     (* Richiama la funzione per visualizzare il polinomio ricostruito *)
-    grafici = PlotReconstructedPoly[reconstructedPoly, labeledPointsList, strLen];
+    grafici = PlotReconstructedPoly[reconstructedPoly, labeledPointsList, strLen, labeledReconstructedPointsList, recStr];
     
     toReturn = {recStr, grafici, isCharacterAdded};
     Return[toReturn];
@@ -101,7 +108,7 @@ Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, char
 
 
 (* Definizione della funzione PlotReconstructedPoly *)
-PlotReconstructedPoly[reconstructedPoly_, labeledPointsList_List, strLen_Integer] :=
+PlotReconstructedPoly[reconstructedPoly_, labeledPointsList_List, strLen_Integer, reconstructedPointsList_, recStr_] :=
 Return[
 Module[{},
     (* Mostra un grafico dei punti e del polinomio ricostruito *)
@@ -116,6 +123,14 @@ Module[{},
           
         ListPlot[labeledPointsList, PlotStyle -> {PointSize[Large], Blue},
           AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {600, 400}, 
+          LabelStyle -> {FontSize -> 18}]],
+          
+       Show[Plot[reconstructedPoly, {x, 1, StringLength[recStr]}, PlotStyle -> Red,
+          AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {600, 400}, 
+          LabelStyle -> {FontSize -> 18}],
+          
+        ListPlot[reconstructedPointsList, PlotStyle -> {PointSize[Large], Blue},
+          AxesLabel -> {"x", "ASCII Value"}, ImageSize -> {600, 400}, 
           LabelStyle -> {FontSize -> 18}]]
     }]
 ]]
@@ -125,7 +140,7 @@ Module[{},
 
 (* Definizione della funzione ReconstructString *)
 ReconstructString[reconstructedPoly_, strLen_Integer, maxErrors_Integer] :=
-Module[{reconstructedPoints,reconstructedAsciiList,reconstructedString  },
+Module[{reconstructedPoints,reconstructedAsciiList,reconstructedString, Result  },
 (* Calcola i punti ricostruiti *)
 reconstructedPoints = Table[{i, reconstructedPoly /. x -> i}, {i, strLen - maxErrors}];
 (* Ottiene la lista di valori ASCII dai punti ricostruiti *)
@@ -134,7 +149,9 @@ reconstructedAsciiList = Round[Last /@ reconstructedPoints];
 (* Converte la lista di valori ASCII in una stringa ricostruita *)
 reconstructedString = FromCharacterCode[reconstructedAsciiList];
 
-Return[reconstructedString];
+Result = {reconstructedString, reconstructedPoints};
+
+Return[Result];
 ]
 
 
