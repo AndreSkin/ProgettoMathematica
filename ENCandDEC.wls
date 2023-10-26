@@ -65,7 +65,7 @@ CreaInterfaccia[] := DynamicModule[{UpperBound = 12, baseInput = "ciao", output 
     Dynamic[If[showDecodeButton, DecodeInterfaccia[], "" ]],
     Dynamic[If[showDecodeButton, 
     Button["(Pulizia)", 
-        output = ""; baseInput = "ciao"; output = ""; randomSeed = 1; seedMessage = ""; showDecodeButton = False;,
+        baseInput = "ciao"; output = ""; randomSeed = 1; seedMessage = ""; showDecodeButton = False;,
         BaseStyle -> {FontSize -> 24}, ImageSize -> {400, 100}
     ], 
     ""
