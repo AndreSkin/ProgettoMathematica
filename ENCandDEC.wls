@@ -36,7 +36,7 @@ La funzione accetta come input una lista di valori calcolati da MsgEncode e util
 Begin["Private`"]
 
 
-CreaInterfaccia[] := DynamicModule[{UpperBound = 12, baseInput = "ciao", output = "", maxErrors = 1, randomSeed = 1, seedMessage = "", ComputedValues = {}, showDecodeButton = False},
+CreaInterfaccia[] := DynamicModule[{UpperBound = 12, baseInput = "ciao", output = "", maxErrors = 1, randomSeed = 1, seedMessage = "", showDecodeButton = False},
   (* Crea una colonna di elementi dell'interfaccia *)
   Column[{
     (* Crea una riga con un'etichetta e un campo di input per l'input dell'utente per impostare il RandomSeed *)
@@ -62,7 +62,15 @@ CreaInterfaccia[] := DynamicModule[{UpperBound = 12, baseInput = "ciao", output 
       BaseStyle -> {FontSize -> 24}, ImageSize -> {400, 100}
     ],
     (* Mostra la seconda interfaccia solo se showDecodeButton \[EGrave] True *)
-    Dynamic[If[showDecodeButton, DecodeInterfaccia[], "" ]]
+    Dynamic[If[showDecodeButton, DecodeInterfaccia[], "" ]],
+    Dynamic[If[showDecodeButton, 
+    Button["(Pulizia)", 
+        output = ""; baseInput = "ciao"; output = ""; randomSeed = 1; seedMessage = ""; showDecodeButton = False;,
+        BaseStyle -> {FontSize -> 24}, ImageSize -> {400, 100}
+    ], 
+    ""
+]]
+
   }]
 ]
 
@@ -307,6 +315,7 @@ Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, char
 
 (* Definizione della funzione PlotReconstructedPoly *)
 PlotReconstructedPoly[reconstructedPoly_, labeledPointsList_List, strLen_Integer, reconstructedPointsList_, recStr_] :=
+
 Return[
 Module[{},
     (* Mostra un grafico dei punti e del polinomio ricostruito *)
