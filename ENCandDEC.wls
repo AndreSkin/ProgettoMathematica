@@ -81,9 +81,9 @@ DecodeInterfaccia[] := DynamicModule[{output = "", decodedString = "", grafici =
         (* Se l'input \[EGrave] valido, chiama la funzione MsgDecode e mostra l'output *)
         err = "";
         output = MsgDecode[];
-        If[output[[3]] == True, decodedString = "La stringa decodificata \[EGrave]: " <> StringDrop[output[[1]],-1],
-        decodedString = "La stringa decodificata \[EGrave]: " <> ToString[output[[1]]]];
         grafici = output[[2]];
+        If[output[[3]] === True, decodedString = "La stringa decodificataa \[EGrave]: " <> ToString[StringDrop[output[[1]],-1]],
+        decodedString = "La stringa decodificata \[EGrave]: " <> ToString[output[[1]]]]
       ],
       BaseStyle -> {FontSize -> 24}, ImageSize -> {400, 100}
     ],
