@@ -8,7 +8,7 @@
 (* :Copyright: CC BY-SA*)
 (* :Package Version: 2.0 *)
 (* :Mathematica Version: 13.3 *)
-(* :History: last modified 26/10/23 *)
+(* :History: last modified 26/11/23 *)
 (* :Keywords: Reed-Solomon, encryption*)
 (* :Sources: V. notebook.nb*)
 (* :Limitations: this is for educational purposes only. *)
@@ -20,7 +20,7 @@ BeginPackage["ENCandDEC`"]
 (* Definizione dell'uso della funzione StrEncode *)
 StrEncode::usage = "StrEncode[inputString, maxErrors] prende in input una stringa e un intero che rappresenta il numero massimo di errori consentiti. 
 La funzione calcola un polinomio interpolante che passa attraverso i punti rappresentati dai valori ASCII dei caratteri della stringa. 
-Se la derivata del polinomio al punto finale \[EGrave] negativa, aggiunge la lettera 'z' alla stringa originale e ricalcola il polinomio interpolante.
+Se la derivata del polinomio al punto finale \[EGrave] negativa, aggiunge la lettera '\[AGrave]' alla stringa originale e ricalcola il polinomio interpolante.
 Espande il polinomio aggiungendo punti extra e mostra i risultati in una colonna."
 
 CreaInterfaccia::usage="Crea un\[CloseCurlyQuote]interfaccia utente per chiamare la funzione StrEncode con gli argomenti specificati dall\[CloseCurlyQuote]utente. 
@@ -106,7 +106,7 @@ DecodeInterfaccia[] := DynamicModule[{output = "", decodedString = "", grafici =
 
 (* Definizione della funzione StrEncode *)
 StrEncode[inputString_String, maxErrors_Integer] :=
-Module[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, fDevSign, labeledPoints, labeledPointsList, isCharacterAdded},
+Module[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, fDevSign, labeledPoints, labeledPointsList, isCharacterAdded,len},
     (* Converte la stringa in una lista di caratteri ASCII *)
     asciiList = ToCharacterCode[inputString];
     
@@ -164,14 +164,10 @@ Module[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, f
             PlotString[polynomial, asciiList, charList, points],
             ExpandString[polynomial, expandedPoints]
             }],
-            StringCorruption[expandedPoints, maxErrors, isCharacterAdded]
-            
-            
+            StringCorruption[expandedPoints, maxErrors, isCharacterAdded]   
         }
     ]
 ]
-
-
 
 
 (* Definizione della funzione PlotString (primo grafico di ENC) *)
@@ -203,8 +199,6 @@ Module[{},
 ]
 
 
-
-
 (* Definizione della funzione ExpandString (terzo grafico di ENC) *)
 ExpandString[polynomial_, expandedPoints_List] :=
 Module[{asciiListExpanded, stringExpanded, charListExpanded, labeledPointsExpanded, labeledPointsExpandedList},
@@ -230,7 +224,6 @@ Module[{asciiListExpanded, stringExpanded, charListExpanded, labeledPointsExpand
 
 
 
-
 (* Definizione della funzione StringCorruption *)
 StringCorruption[expandedPoints_List, maxErrors_Integer,isCharacterAdded_] :=
 Module[{asciiListExpanded, stringExpanded, nErrors, errorsPos,myStringAsList,corruptedString,StrLen, intervallo, valoriDaEscludere, posizioneAaccentata, toDelete},
@@ -242,9 +235,6 @@ Module[{asciiListExpanded, stringExpanded, nErrors, errorsPos,myStringAsList,cor
     
       (* Converte la stringa espansa in una lista di caratteri *)
     myStringAsList = Characters[stringExpanded];
-    
-    
-    (* --------------------------------------------------------------------------------------------------------------*);
     intervallo = {1, maxErrors};
     
     valoriDaEscludere = {};
@@ -255,10 +245,7 @@ Module[{asciiListExpanded, stringExpanded, nErrors, errorsPos,myStringAsList,cor
 	(* Stampa il risultato *)
 	If[posizioneAaccentata =!= {}, 
 	  valoriDaEscludere = Last[posizioneAaccentata];
-	];
-    
-   (* nErrors = RandomChoice[Complement[Range @@ intervallo, valoriDaEscludere]];*)
-    
+	];    
     (* Genera un numero casuale di errori da introdurre nella stringa *)
     nErrors = RandomInteger[{1, maxErrors}];
     
@@ -270,9 +257,6 @@ Module[{asciiListExpanded, stringExpanded, nErrors, errorsPos,myStringAsList,cor
     errorsPos = Delete[errorsPos, toDelete];
 	];
     
-   
-    
-   (* --------------------------------------------------------------------------------------------------------------*);
     (* Rimuove i caratteri alle posizioni degli errori *)
     myStringAsList = Delete[myStringAsList, List /@ errorsPos];
     
@@ -289,7 +273,6 @@ Module[{asciiListExpanded, stringExpanded, nErrors, errorsPos,myStringAsList,cor
     StringJoin["Stringa corrotta: ", corruptedString],
     StringJoin["Lunghezza della stringa espansa: ", ToString[StrLen]]}]
 ]
-
 
 
 MsgDecode[] := 
@@ -341,7 +324,6 @@ Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, char
 
 (* Definizione della funzione PlotReconstructedPoly *)
 PlotReconstructedPoly[reconstructedPoly_, labeledPointsList_List, strLen_Integer, reconstructedPointsList_, recStr_] :=
-
 Return[
 Module[{},
     (* Mostra un grafico dei punti e del polinomio ricostruito *)
@@ -389,4 +371,3 @@ Return[Result];
 End[]
 
 EndPackage[]
-
