@@ -165,6 +165,8 @@ Module[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, f
             ExpandString[polynomial, expandedPoints]
             }],
             StringCorruption[expandedPoints, maxErrors, isCharacterAdded]
+            
+            
         }
     ]
 ]
@@ -231,22 +233,46 @@ Module[{asciiListExpanded, stringExpanded, charListExpanded, labeledPointsExpand
 
 (* Definizione della funzione StringCorruption *)
 StringCorruption[expandedPoints_List, maxErrors_Integer,isCharacterAdded_] :=
-Module[{asciiListExpanded, stringExpanded, nErrors, errorsPos,myStringAsList,corruptedString,StrLen},
+Module[{asciiListExpanded, stringExpanded, nErrors, errorsPos,myStringAsList,corruptedString,StrLen, intervallo, valoriDaEscludere, posizioneAaccentata, toDelete},
     (* Ottiene la lista dei valori ASCII dagli expandedPoints *)
     asciiListExpanded = Round[Last /@ expandedPoints];
     
     (* Converte la lista di valori ASCII in una stringa *)
     stringExpanded = FromCharacterCode[asciiListExpanded];
     
+      (* Converte la stringa espansa in una lista di caratteri *)
+    myStringAsList = Characters[stringExpanded];
+    
+    
+    (* --------------------------------------------------------------------------------------------------------------*);
+    intervallo = {1, maxErrors};
+    
+    valoriDaEscludere = {};
+    
+	(* Trova la posizione del carattere '\[AGrave]' nella lista *)
+	posizioneAaccentata = Position[myStringAsList, "\[AGrave]"];
+	
+	(* Stampa il risultato *)
+	If[posizioneAaccentata =!= {}, 
+	  valoriDaEscludere = Last[posizioneAaccentata];
+	];
+    
+   (* nErrors = RandomChoice[Complement[Range @@ intervallo, valoriDaEscludere]];*)
+    
     (* Genera un numero casuale di errori da introdurre nella stringa *)
     nErrors = RandomInteger[{1, maxErrors}];
     
     (* Genera una lista casuale di posizioni in cui introdurre gli errori *)
     errorsPos = RandomSample[Range[StringLength[stringExpanded]], nErrors];
+   
+	If[valoriDaEscludere =!= {}, 
+	   toDelete=Position[errorsPos, valoriDaEscludere[[-1]]];
+    errorsPos = Delete[errorsPos, toDelete];
+	];
     
-    (* Converte la stringa espansa in una lista di caratteri *)
-    myStringAsList = Characters[stringExpanded];
+   
     
+   (* --------------------------------------------------------------------------------------------------------------*);
     (* Rimuove i caratteri alle posizioni degli errori *)
     myStringAsList = Delete[myStringAsList, List /@ errorsPos];
     
