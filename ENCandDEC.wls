@@ -8,7 +8,7 @@
 (* :Copyright: CC BY-SA*)
 (* :Package Version: 2.0 *)
 (* :Mathematica Version: 13.3 *)
-(* :History: last modified 26/11/23 *)
+(* :History: last modified 27/11/23 *)
 (* :Keywords: Reed-Solomon, encryption*)
 (* :Sources: V. notebook.nb*)
 (* :Limitations: this is for educational purposes only. *)
@@ -16,21 +16,22 @@
 (* :Requirements: None *)
 
 BeginPackage["ENCandDEC`"]
+(* Spiegazione delle funzioni, commentate perch\[EGrave] non sono utilizzate nel tutorial.nb
 
-(* Definizione dell'uso della funzione StrEncode *)
 StrEncode::usage = "StrEncode[inputString, maxErrors] prende in input una stringa e un intero che rappresenta il numero massimo di errori consentiti. 
 La funzione calcola un polinomio interpolante che passa attraverso i punti rappresentati dai valori ASCII dei caratteri della stringa. 
 Se la derivata del polinomio al punto finale \[EGrave] negativa, aggiunge la lettera '\[AGrave]' alla stringa originale e ricalcola il polinomio interpolante.
 Espande il polinomio aggiungendo punti extra e mostra i risultati in una colonna."
 
-CreaInterfaccia::usage="Crea un\[CloseCurlyQuote]interfaccia utente per chiamare la funzione StrEncode con gli argomenti specificati dall\[CloseCurlyQuote]utente. 
-L\[CloseCurlyQuote]interfaccia consiste in un campo di input per l\[CloseCurlyQuote]input dell\[CloseCurlyQuote]utente, uno slider per selezionare il valore massimo degli errori 
-e un bottone per chiamare la funzione StrEncode e mostrare l\[CloseCurlyQuote]output."
-
 DecodeInterfaccia::usage="Funzione che crea un\[CloseCurlyQuote]interfaccia utente per chiamare la funzione MsgDecode. 
 L\[CloseCurlyQuote]interfaccia consiste in un bottone per decodificare la stringa e due elementi dinamici per mostrare il messaggio di errore 
 o la stringa decodificata e i grafici restituiti dalla funzione MsgDecode. 
 La funzione accetta come input una lista di valori calcolati da MsgEncode e utilizza le variabili locali al modulo per gestire lo stato dell\[CloseCurlyQuote]interfaccia."
+*)
+
+CreaInterfaccia::usage="Crea un\[CloseCurlyQuote]interfaccia utente per chiamare la funzione StrEncode con gli argomenti specificati dall\[CloseCurlyQuote]utente. 
+L\[CloseCurlyQuote]interfaccia consiste in un campo di input per l\[CloseCurlyQuote]input dell\[CloseCurlyQuote]utente, uno slider per selezionare il valore massimo degli errori 
+e un bottone per chiamare la funzione StrEncode e mostrare l\[CloseCurlyQuote]output."
 
 
 Begin["Private`"]
@@ -53,9 +54,8 @@ CreaInterfaccia[] := DynamicModule[{UpperBound = 12, baseInput = "ciao", output 
     (* Crea un bottone che chiama la funzione StrEncode quando viene premuto e mostra l'output *)
     Button["Espandi e corrompi stringa",
       If[StringLength[StringTrim[baseInput]] < 2,
-        output = "Per favore inserisci contenente almeno due caratteri",
+        output = "Per favore inserisci almeno due caratteri",
         output = StrEncode[StringTake[StringTrim[baseInput], Min[StringLength[StringTrim[baseInput]], UpperBound]], maxErrors];
-        (*ComputedValues = output;*)
         maxErrors = 1;
         showDecodeButton = True;
       ],
@@ -106,7 +106,7 @@ DecodeInterfaccia[] := DynamicModule[{output = "", decodedString = "", grafici =
 
 (* Definizione della funzione StrEncode *)
 StrEncode[inputString_String, maxErrors_Integer] :=
-Module[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, fDevSign, labeledPoints, labeledPointsList, isCharacterAdded,len},
+Module[{i=0, asciiList={}, points={}, polynomial, expandedPoints={}, charList={}, str="", fDev, fDevSign, labeledPoints={}, labeledPointsList, isCharacterAdded=False,len=0},
     (* Converte la stringa in una lista di caratteri ASCII *)
     asciiList = ToCharacterCode[inputString];
     
@@ -156,7 +156,7 @@ Module[{i, asciiList, points, polynomial, expandedPoints, charList, str, fDev, f
     (* Espande il polinomio aggiungendo punti aggiuntivi *)
     expandedPoints = Table[{i, polynomial /. x -> i}, {i, Length[points] + maxErrors}];
     
-    (* Mostra i risultati in una colonna *)
+    (* Mostra i risultati in una riga *)
     Column[
         {
         Row[{
@@ -201,7 +201,7 @@ Module[{},
 
 (* Definizione della funzione ExpandString (terzo grafico di ENC) *)
 ExpandString[polynomial_, expandedPoints_List] :=
-Module[{asciiListExpanded, stringExpanded, charListExpanded, labeledPointsExpanded, labeledPointsExpandedList},
+Module[{asciiListExpanded={}, stringExpanded="", charListExpanded={}, labeledPointsExpanded={}, labeledPointsExpandedList={}},
     (* Ottiene la lista dei valori ASCII dagli expandedPoints *)
     asciiListExpanded = Round[Last /@ expandedPoints];
     
@@ -226,7 +226,7 @@ Module[{asciiListExpanded, stringExpanded, charListExpanded, labeledPointsExpand
 
 (* Definizione della funzione StringCorruption *)
 StringCorruption[expandedPoints_List, maxErrors_Integer,isCharacterAdded_] :=
-Module[{asciiListExpanded, stringExpanded, nErrors, errorsPos,myStringAsList,corruptedString,StrLen, intervallo, valoriDaEscludere, posizioneAaccentata, toDelete},
+Module[{asciiListExpanded={}, stringExpanded="", nErrors=0, errorsPos={},myStringAsList={},corruptedString="",StrLen=0, intervallo={}, valoriDaEscludere={}, posizioneAaccentata={}, toDelete={}},
     (* Ottiene la lista dei valori ASCII dagli expandedPoints *)
     asciiListExpanded = Round[Last /@ expandedPoints];
     
@@ -276,7 +276,7 @@ Module[{asciiListExpanded, stringExpanded, nErrors, errorsPos,myStringAsList,cor
 
 
 MsgDecode[] := 
-Module[{corruptedString, errorsPos, strLen, maxErrors, asciiList, charList, charsPos,points,labeledPoints, labeledPointsList, reconstructedPoly,recStr,grafici, toReturn, isCharacterAdded, ReconstructStringResult, reconstructedPointsList, labeledReconstructedPoints, charReconstructedList, labeledReconstructedPointsList},    
+Module[{corruptedString="", errorsPos={}, strLen=0, maxErrors=0, asciiList={}, charList={}, charsPos={},points={},labeledPoints={}, labeledPointsList={}, reconstructedPoly,recStr="",grafici={}, toReturn={}, isCharacterAdded=False, ReconstructStringResult={}, reconstructedPointsList={}, labeledReconstructedPoints={}, charReconstructedList={}, labeledReconstructedPointsList={}},    
     (* Estrae i valori dalla lista di input *)
     corruptedString = ComputedValues[[1]];
     errorsPos = ComputedValues[[2]];
@@ -353,7 +353,7 @@ Module[{},
 
 (* Definizione della funzione ReconstructString *)
 ReconstructString[reconstructedPoly_, strLen_Integer, maxErrors_Integer] :=
-Module[{reconstructedPoints,reconstructedAsciiList,reconstructedString, Result  },
+Module[{reconstructedPoints={}, reconstructedAsciiList={}, reconstructedString="", Result={}},
 (* Calcola i punti ricostruiti *)
 reconstructedPoints = Table[{i, reconstructedPoly /. x -> i}, {i, strLen - maxErrors}];
 (* Ottiene la lista di valori ASCII dai punti ricostruiti *)
